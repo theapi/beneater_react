@@ -2,13 +2,13 @@ import React from 'react';
 
 import Clock from './Clock';
 import Led from './Led';
+import ProgramCounter from './ProgramCounter';
 
 class Cpu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       clk: false,       // Cpu clock
-      pc: 0,            // Program counter
       uc: 0,            // Micro code counter
       bus: 0,           // The main bus
       a_reg: 0,         // A register (accumulator)
@@ -17,6 +17,11 @@ class Cpu extends React.Component {
       mar: 0,           // Memory address register
       instruction: 0,   // Instruction register
       ctl_word: 0,      // The control word
+      pc: {             // Program counter
+        inc: true,        // Increment the counter
+        load: false,      // Set the counter to value on the bus
+        value: 0,         // The value of the counter
+      },
     };
   }
 
@@ -25,6 +30,11 @@ class Cpu extends React.Component {
       <div className="Cpu">
         <Clock clk={this.state.clk} onTick={() => this.handleClockTick()}/>
         <Led clk={this.state.clk}/>
+        <ProgramCounter
+          clk={this.state.clk}
+          pc={this.state.pc}
+          set={(val) => this.setProgramCounter(val)}
+        />
       </div>
     );
   }
@@ -33,6 +43,16 @@ class Cpu extends React.Component {
     this.setState(state => ({
       clk: !state.clk
     }));
+  }
+
+  setBus(value) {
+    this.setState({ bus: value });
+  }
+
+  setProgramCounter(value) {
+    const pc = { ...this.state.pc };
+    pc.value = value;
+    this.setState({ pc: pc});
   }
 }
 
