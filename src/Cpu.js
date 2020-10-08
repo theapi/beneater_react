@@ -7,7 +7,7 @@ class Cpu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      clk: 0,
+      clk: false,
     };
   }
 
