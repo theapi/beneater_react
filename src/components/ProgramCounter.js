@@ -11,8 +11,12 @@ class ProgramCounter extends React.Component {
       const pc = { ...this.props.pc };
 
       if (pc.inc) {
-        // Increment.
-        pc.value++;
+        // Increment, but only 16 word memory!
+        if (pc.value < 15) {
+          pc.value++;
+        } else {
+          pc.value = 0;
+        }
         //pc.inc = false; TMP commented out
         this.props.set(pc);
       } else if (pc.load) {
