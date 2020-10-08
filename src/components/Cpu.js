@@ -33,7 +33,7 @@ class Cpu extends React.Component {
         <ProgramCounter
           clk={this.state.clk}
           pc={this.state.pc}
-          set={(val) => this.setProgramCounter(val)}
+          set={(state) => this.updateState('pc', state)}
         />
       </div>
     );
@@ -49,10 +49,8 @@ class Cpu extends React.Component {
     this.setState({ bus: value });
   }
 
-  setProgramCounter(value) {
-    const pc = { ...this.state.pc };
-    pc.value = value;
-    this.setState({ pc: pc});
+  updateState(key, state) {
+    this.setState({ [key]: state });
   }
 }
 

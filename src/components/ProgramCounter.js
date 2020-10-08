@@ -8,12 +8,18 @@ class ProgramCounter extends React.Component {
   componentDidUpdate(prevProps) {
     // always @(posedge clk)
     if (this.props.clk !== prevProps.clk && this.props.clk === true) {
-      if (this.props.pc.inc) {
+      const pc = { ...this.props.pc };
+
+      if (pc.inc) {
         // Increment.
-        this.props.set(this.props.pc.value + 1);
-      } else if (this.props.pc.load) {
+        pc.value++;
+        //pc.inc = false; TMP commented out
+        this.props.set(pc);
+      } else if (pc.load) {
         // Load from the bus.
-        this.props.set(this.props.bus);
+        pc.value = this.props.bus;
+        pc.load = false;
+        this.props.set(pc);
       }
     }
   }
