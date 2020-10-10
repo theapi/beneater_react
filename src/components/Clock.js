@@ -1,6 +1,12 @@
 import React from 'react';
 
 class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      clk: false,
+    }
+  }
 
   componentDidMount() {
     this.timerID = setInterval(
@@ -14,13 +20,17 @@ class Clock extends React.Component {
   }
 
   tick() {
-    this.props.onTick();
+    const clk = !this.state.clk;
+    this.setState({ clk });
+
+    // Output the clock to the rest of the system.
+    this.props.out(clk);
   }
 
   render() {
     return (
       <div>
-        <h2>Clock is {this.props.clk ? 'HIGH' : 'LOW'}</h2>
+        <h2>Clock: {this.state.clk ? 'HIGH' : 'LOW'}</h2>
       </div>
     );
   }

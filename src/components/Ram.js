@@ -23,6 +23,11 @@ class Ram extends React.Component {
       0x1C,
       0x0E,
     ];
+
+    // Set the value to memory address 0;
+    this.state = {
+      value: this.memory[0],
+    }
   }
 
   /**
@@ -31,18 +36,24 @@ class Ram extends React.Component {
    */
   componentDidUpdate(prevProps) {
     // always @(addr)
-    if (this.props.ram.addr !== prevProps.ram.addr) {
-      const ram = { ...this.props.ram };
-      ram.value = this.memory[this.props.ram.addr];
-      this.props.set(ram);
+    if (this.props.readAddress !== prevProps.readAddress) {
+      this.setState({ value: this.memory[this.props.readAddress] });
+    }
+
+    // always @(posedge clk)
+    if (this.props.clk !== prevProps.clk && this.props.clk === true) {
+      // RAM out.
+      if (this.props.ro) {
+        this.props.out(this.state.value);
+      }
     }
   }
 
   render() {
     return (
       <div>
-        <h2>Ram value at {this.props.ram.addr} is
-        : {this.memory[this.props.ram.addr].toString(16).toUpperCase()}</h2>
+        <h2>Ram value at {this.props.readAddress} is
+        : {this.state.value.toString(16).toUpperCase()}</h2>
       </div>
     );
   }
