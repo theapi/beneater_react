@@ -5,6 +5,7 @@ class ProgramCounter extends React.Component {
     super(props);
     this.state = {
       value: 0,
+      busClass: 'busDisconnected',
     }
   }
 
@@ -43,13 +44,23 @@ class ProgramCounter extends React.Component {
       if (this.props.co) {
         this.props.out(value);
       }
+
+      // Styling
+      //if (this.props.co !== prevProps.co) {
+        if (this.props.co) {
+          this.setState({ busClass: 'busOut' });
+        } else {
+          this.setState({ busClass: 'busDisconnected' });
+        }
+      //}
+
     }
   }
 
   render() {
     return (
       <div>
-        <h2>ProgramCounter: {this.state.value}</h2>
+        <h2 className={this.state.busClass}>ProgramCounter: {this.state.value}</h2>
       </div>
     );
   }
