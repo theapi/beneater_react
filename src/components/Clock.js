@@ -24,7 +24,7 @@ class Clock extends React.Component {
     this.setState({ clk });
 
     // Output the clock to the rest of the system.
-    this.props.out(clk);
+    this.props.update(clk);
   }
 
   render() {

@@ -5,6 +5,8 @@ import Led from './Led';
 import Bus from './Bus';
 import ProgramCounter from './ProgramCounter';
 import Ram from './Ram';
+import Register from './Register'
+import Alu from './Alu'
 
 class Cpu extends React.Component {
   constructor(props) {
@@ -13,13 +15,15 @@ class Cpu extends React.Component {
       clk: false,       // Cpu clock
       reset: false,     // Reset to start values
       bus: 0,           // The main bus
+      regA: 0,
+      regB: 0,
     };
   }
 
   render() {
     return (
       <div className="Cpu">
-        <Clock out={(state) => this.updateState('clk', state)} />
+        <Clock update={(state) => this.updateState('clk', state)} />
         <Led clk={this.state.clk}/>
         <Bus bus={this.state.bus}/>
         <ProgramCounter
@@ -29,13 +33,37 @@ class Cpu extends React.Component {
           load={false} // @todo control from program
           in={this.state.bus}
           co={true} // Counter out @todo control from program
-          out={(val) => this.setBus(val)}
+          bus={(val) => this.setBus(val)}
         />
         <Ram
           clk={this.state.clk}
           readAddress={this.state.bus} // @todo control from program
           ro={false} // RAM out @todo control from program
-          out={(val) => this.setBus(val)}
+          bus={(val) => this.setBus(val)}
+        />
+        <Register
+          name="A Register"
+          update={(val) => this.updateState('regA', val)}
+          clk={this.state.clk}
+          load={false} // @todo control from program
+          in={this.state.bus}
+          oe={false} // RAM out @todo control from program
+          bus={(val) => this.setBus(val)}
+        />
+        <Register
+          name="B Register"
+          update={(val) => this.updateState('regB', val)}
+          clk={this.state.clk}
+          load={false} // @todo control from program
+          in={this.state.bus}
+          oe={false} // RAM out @todo control from program
+          bus={(val) => this.setBus(val)}
+        />
+        <Alu
+          regA={this.state.regA}
+          regB={this.state.regB}
+          eo={false} // RAM out @todo control from program
+          bus={(val) => this.setBus(val)}
         />
       </div>
     );
@@ -48,6 +76,7 @@ class Cpu extends React.Component {
   updateState(key, state) {
     this.setState({ [key]: state });
   }
+
 }
 
 export default Cpu;

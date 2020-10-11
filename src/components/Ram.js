@@ -44,7 +44,7 @@ class Ram extends React.Component {
     if (this.props.clk !== prevProps.clk && this.props.clk === true) {
       // RAM out.
       if (this.props.ro) {
-        this.props.out(this.state.value);
+        this.props.bus(this.state.value);
       }
 
       // Styling
