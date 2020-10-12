@@ -20,6 +20,7 @@ class Cpu extends React.Component {
       regA: 0,
       regB: 0,
       regInstruction: 0,
+      regMar: 0,
     };
   }
 
@@ -30,11 +31,8 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('clk', val)}
         />
         <Led clk={this.state.clk}/>
-        <MicroCodeCounter
-          clk={this.state.clk}
-          update={(val) => this.updateState('uCount', val)}
-        />
         <Bus bus={this.state.bus}/>
+
         <ProgramCounter
           clk={this.state.clk}
           reset={this.state.reset}
@@ -44,11 +42,25 @@ class Cpu extends React.Component {
           co={true} // Counter out @todo control from program
           bus={(val) => this.setBus(val)}
         />
+
+        <Register
+          name="Memory Address Register"
+          update={(val) => this.updateState('regMar', val)}
+          clk={this.state.clk}
+          load={false} // @todo control from program
+          in={this.state.bus}
+          oe={false} // RAM out @todo control from program
+          bus={() => {}} // MAR does not output to the bus, so ignore it.
+        />
         <Ram
           clk={this.state.clk}
           readAddress={this.state.bus} // @todo control from program
           ro={false} // RAM out @todo control from program
           bus={(val) => this.setBus(val)}
+        />
+        <MicroCodeCounter
+          clk={this.state.clk}
+          update={(val) => this.updateState('uCount', val)}
         />
         <Register
           name="Instruction Register"
@@ -59,6 +71,7 @@ class Cpu extends React.Component {
           oe={false} // RAM out @todo control from program
           bus={(val) => this.setBus(val)}
         />
+
         <Register
           name="A Register"
           update={(val) => this.updateState('regA', val)}
@@ -83,6 +96,7 @@ class Cpu extends React.Component {
           eo={false} // RAM out @todo control from program
           bus={(val) => this.setBus(val)}
         />
+
       </div>
     );
   }
