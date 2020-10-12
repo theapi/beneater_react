@@ -24,6 +24,13 @@ export const rom = () => {
   rom[35] = 0x1020;
   rom[36] = 0x280;
 
+  // OUT
+  rom[224] = 0x4004;
+  rom[225] = 0x1408;
+  rom[226] = 0x110;
+
+  // HALT
+  rom[240] = 0x8000;
 
   return rom;
 }

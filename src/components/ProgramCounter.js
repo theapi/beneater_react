@@ -4,7 +4,7 @@ class ProgramCounter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: -1,
+      value: 0,
     }
   }
 
@@ -25,7 +25,9 @@ class ProgramCounter extends React.Component {
     // always @(oe)
     if (this.props.co !== prevProps.co) {
       // Output enable
+      console.log(`pc co: ${this.props.co}`);
       if (this.props.co) {
+        console.log(`pc bus: ${this.state.value}`);
         this.props.bus(this.state.value);
       }
     }
@@ -35,9 +37,8 @@ class ProgramCounter extends React.Component {
       let value = this.state.value;
       if (this.props.inc) {
         // Increment, but only 16 x 16 memory!
-        if (value < 15) {
-          value++;
-        } else {
+        value++;
+        if (value > 15) {
           value = 0;
         }
         this.setState({ value });
@@ -46,6 +47,7 @@ class ProgramCounter extends React.Component {
         value = this.props.in;
         this.setState({ value });
       }
+      console.log(`pc: ${value}`);
     }
   }
 

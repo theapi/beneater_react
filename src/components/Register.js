@@ -33,6 +33,7 @@ class Register extends React.Component {
     // always @(posedge clk)
     if (this.props.clk !== prevProps.clk && this.props.clk === true) {
       if (this.props.load) {
+        console.log(`reg loading: ${this.props.in}`);
         // Load from the bus.
         this.setState({ value: this.props.in });
         // Set the external state for the ALU

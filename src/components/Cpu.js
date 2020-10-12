@@ -16,7 +16,7 @@ class Cpu extends React.Component {
     this.state = {
       reset: false,     // Reset to start values
       clk: false,       // Cpu clock
-      uCount: -1,    // Microcode counter
+      uCount: false,    // Microcode counter
       bus: 0,           // The main bus
       regA: 0,
       regB: 0,
@@ -38,10 +38,10 @@ class Cpu extends React.Component {
         <ProgramCounter
           clk={this.state.clk}
           reset={this.state.reset}
-          inc={false} // @todo control from program
-          load={false} // @todo control from program
+          inc={this.state.controlWord.ce}
+          load={this.state.controlWord.j}
           in={this.state.bus}
-          co={false} // Counter out @todo control from program
+          co={this.state.controlWord.co}
           bus={(val) => this.setBus(val)}
         />
 
@@ -50,15 +50,15 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('regMar', val)}
           clk={this.state.clk}
           reset={this.state.reset}
-          load={false} // @todo control from program
+          load={this.state.controlWord.mi}
           in={this.state.bus}
-          oe={false} // Output enable @todo control from program
+          oe={false} // No output enable for the MAR.
           bus={() => {}} // MAR does not output to the bus, so ignore it.
         />
         <Ram
           clk={this.state.clk}
-          readAddress={this.state.bus} // @todo control from program
-          ro={false} // Output enable @todo control from program
+          readAddress={this.state.regMar}
+          ro={this.state.controlWord.ro} // Output enable
           bus={(val) => this.setBus(val)}
         />
         <MicroCodeCounter
@@ -125,6 +125,7 @@ class Cpu extends React.Component {
 
   setBus(value) {
     this.setState({ bus: value });
+    console.log(`bus: ${value}`);
   }
 
   updateState(key, state) {

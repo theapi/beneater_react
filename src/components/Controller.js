@@ -5,7 +5,7 @@ class Controller extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: false,
     }
 
     // Instruction set ROM.
@@ -52,11 +52,11 @@ class Controller extends React.Component {
       // So mask off the lower nibble.
       const instruction = this.props.in & 0xF0;
       const readAddress = instruction | this.props.counter;
-      console.log(`readAddress: ${readAddress}`);
       this.setState({ value: this.memory[readAddress] });
 
       // Set the decoded control word for the rest of the cpu.
       this.props.update(this.decode(this.memory[readAddress]));
+      console.log(this.decode(this.memory[readAddress]));
     }
   }
 
