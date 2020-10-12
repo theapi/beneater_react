@@ -4,6 +4,7 @@ import Clock from './Clock';
 import Led from './Led';
 import Bus from './Bus';
 import ProgramCounter from './ProgramCounter';
+import MicroCodeCounter from './MicroCodeCounter';
 import Ram from './Ram';
 import Register from './Register'
 import Alu from './Alu'
@@ -13,18 +14,26 @@ class Cpu extends React.Component {
     super(props);
     this.state = {
       clk: false,       // Cpu clock
+      uCount: false,    // Microcode counter
       reset: false,     // Reset to start values
       bus: 0,           // The main bus
       regA: 0,
       regB: 0,
+      regInstruction: 0,
     };
   }
 
   render() {
     return (
       <div className="Cpu">
-        <Clock update={(state) => this.updateState('clk', state)} />
+        <Clock
+          update={(val) => this.updateState('clk', val)}
+        />
         <Led clk={this.state.clk}/>
+        <MicroCodeCounter
+          clk={this.state.clk}
+          update={(val) => this.updateState('uCount', val)}
+        />
         <Bus bus={this.state.bus}/>
         <ProgramCounter
           clk={this.state.clk}
@@ -39,6 +48,15 @@ class Cpu extends React.Component {
           clk={this.state.clk}
           readAddress={this.state.bus} // @todo control from program
           ro={false} // RAM out @todo control from program
+          bus={(val) => this.setBus(val)}
+        />
+        <Register
+          name="Instruction Register"
+          update={(val) => this.updateState('regInstruction', val)}
+          clk={this.state.clk}
+          load={false} // @todo control from program
+          in={this.state.bus}
+          oe={false} // RAM out @todo control from program
           bus={(val) => this.setBus(val)}
         />
         <Register
