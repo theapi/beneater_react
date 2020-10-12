@@ -5,7 +5,6 @@ class Alu extends React.Component {
     super(props);
     this.state = {
       value: 0,
-      busClass: 'busDisconnected',
     }
   }
 
@@ -27,13 +26,16 @@ class Alu extends React.Component {
         this.props.bus(this.state.value);
       }
     }
-
   }
 
   render() {
+    let className = 'busDisconnected';
+    if (this.props.eo) {
+      className = 'busOut';
+    }
     return (
       <div>
-        <h2 className={this.state.busClass}>Sum: {this.state.value}</h2>
+        <h2 className={className}>Sum: {this.state.value}</h2>
       </div>
     );
   }
