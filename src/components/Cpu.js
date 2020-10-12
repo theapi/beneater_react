@@ -8,6 +8,7 @@ import MicroCodeCounter from './MicroCodeCounter';
 import Ram from './Ram';
 import Register from './Register'
 import Alu from './Alu'
+import Controller from './Controller';
 
 class Cpu extends React.Component {
   constructor(props) {
@@ -15,12 +16,13 @@ class Cpu extends React.Component {
     this.state = {
       reset: false,     // Reset to start values
       clk: false,       // Cpu clock
-      uCount: false,    // Microcode counter
+      uCount: -1,    // Microcode counter
       bus: 0,           // The main bus
       regA: 0,
       regB: 0,
       regInstruction: 0,
       regMar: 0,
+      controlWord: {},
     };
   }
 
@@ -36,10 +38,10 @@ class Cpu extends React.Component {
         <ProgramCounter
           clk={this.state.clk}
           reset={this.state.reset}
-          inc={true} // @todo control from program
+          inc={false} // @todo control from program
           load={false} // @todo control from program
           in={this.state.bus}
-          co={true} // Counter out @todo control from program
+          co={false} // Counter out @todo control from program
           bus={(val) => this.setBus(val)}
         />
 
@@ -63,6 +65,11 @@ class Cpu extends React.Component {
           clk={this.state.clk}
           reset={this.state.reset}
           update={(val) => this.updateState('uCount', val)}
+        />
+        <Controller
+          counter={this.state.uCount}
+          in={this.state.bus}
+          update={(val) => this.updateState('controlWord', val)}
         />
         <Register
           name="Instruction Register"

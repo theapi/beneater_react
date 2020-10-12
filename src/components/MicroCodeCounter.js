@@ -4,7 +4,7 @@ class MicroCodeCounter extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: 0,
+      value: -1,
     }
   }
 
@@ -31,6 +31,7 @@ class MicroCodeCounter extends React.Component {
       } else {
         value = 0;
       }
+
       this.setState({ value });
       this.props.update(value);
     }
