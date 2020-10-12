@@ -13,9 +13,9 @@ class Cpu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      reset: false,     // Reset to start values
       clk: false,       // Cpu clock
       uCount: false,    // Microcode counter
-      reset: false,     // Reset to start values
       bus: 0,           // The main bus
       regA: 0,
       regB: 0,
@@ -47,28 +47,31 @@ class Cpu extends React.Component {
           name="Memory Address Register"
           update={(val) => this.updateState('regMar', val)}
           clk={this.state.clk}
+          reset={this.state.reset}
           load={false} // @todo control from program
           in={this.state.bus}
-          oe={false} // RAM out @todo control from program
+          oe={false} // Output enable @todo control from program
           bus={() => {}} // MAR does not output to the bus, so ignore it.
         />
         <Ram
           clk={this.state.clk}
           readAddress={this.state.bus} // @todo control from program
-          ro={false} // RAM out @todo control from program
+          ro={false} // Output enable @todo control from program
           bus={(val) => this.setBus(val)}
         />
         <MicroCodeCounter
           clk={this.state.clk}
+          reset={this.state.reset}
           update={(val) => this.updateState('uCount', val)}
         />
         <Register
           name="Instruction Register"
           update={(val) => this.updateState('regInstruction', val)}
           clk={this.state.clk}
+          reset={this.state.reset}
           load={false} // @todo control from program
           in={this.state.bus}
-          oe={false} // RAM out @todo control from program
+          oe={false} // Output enable @todo control from program
           bus={(val) => this.setBus(val)}
         />
 
@@ -76,25 +79,37 @@ class Cpu extends React.Component {
           name="A Register"
           update={(val) => this.updateState('regA', val)}
           clk={this.state.clk}
+          reset={this.state.reset}
           load={false} // @todo control from program
           in={this.state.bus}
-          oe={false} // RAM out @todo control from program
+          oe={false} // Output enable @todo control from program
           bus={(val) => this.setBus(val)}
         />
         <Register
           name="B Register"
           update={(val) => this.updateState('regB', val)}
           clk={this.state.clk}
+          reset={this.state.reset}
           load={false} // @todo control from program
           in={this.state.bus}
-          oe={false} // RAM out @todo control from program
+          oe={false} // Output enable @todo control from program
           bus={(val) => this.setBus(val)}
         />
         <Alu
           regA={this.state.regA}
           regB={this.state.regB}
-          eo={false} // RAM out @todo control from program
+          eo={false} // Output enable @todo control from program
           bus={(val) => this.setBus(val)}
+        />
+        <Register
+          name="Output Register"
+          update={(val) => this.updateState('regOut', val)}
+          clk={this.state.clk}
+          reset={this.state.reset}
+          load={false} // @todo control from program
+          in={this.state.bus}
+          oe={false} // Output enable @todo control from program
+          bus={() => {}} // Does not output to the bus, so ignore it.
         />
 
       </div>
