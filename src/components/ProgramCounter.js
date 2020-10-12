@@ -25,7 +25,7 @@ class ProgramCounter extends React.Component {
     // always @(oe)
     if (this.props.co !== prevProps.co) {
       // Output enable
-      console.log(`pc co: ${this.props.co}`);
+      // console.log(`pc co: ${this.props.co}`);
       if (this.props.co) {
         console.log(`pc bus: ${this.state.value}`);
         this.props.bus(this.state.value);
@@ -41,13 +41,13 @@ class ProgramCounter extends React.Component {
         if (value > 15) {
           value = 0;
         }
+        console.log(`pc set: ${value}`);
         this.setState({ value });
       } else if (this.props.load) {
         // Load from the input.
         value = this.props.in;
         this.setState({ value });
       }
-      console.log(`pc: ${value}`);
     }
   }
 

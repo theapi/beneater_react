@@ -30,6 +30,7 @@ class Cpu extends React.Component {
     return (
       <div className="Cpu">
         <Clock
+          halt={this.state.controlWord.hlt}
           update={(val) => this.updateState('clk', val)}
         />
         <Led clk={this.state.clk}/>
@@ -61,6 +62,16 @@ class Cpu extends React.Component {
           ro={this.state.controlWord.ro} // Output enable
           bus={(val) => this.setBus(val)}
         />
+        <Register
+          name="Instruction Register"
+          update={(val) => this.updateState('regInstruction', val)}
+          clk={this.state.clk}
+          reset={this.state.reset}
+          load={this.state.controlWord.ii}
+          in={this.state.bus}
+          oe={this.state.controlWord.io}
+          bus={(val) => this.setBus(val >> 4)}
+        />
         <MicroCodeCounter
           clk={this.state.clk}
           reset={this.state.reset}
@@ -68,18 +79,8 @@ class Cpu extends React.Component {
         />
         <Controller
           counter={this.state.uCount}
-          in={this.state.bus}
+          in={this.state.regInstruction}
           update={(val) => this.updateState('controlWord', val)}
-        />
-        <Register
-          name="Instruction Register"
-          update={(val) => this.updateState('regInstruction', val)}
-          clk={this.state.clk}
-          reset={this.state.reset}
-          load={false} // @todo control from program
-          in={this.state.bus}
-          oe={false} // Output enable @todo control from program
-          bus={(val) => this.setBus(val)}
         />
 
         <Register
@@ -87,9 +88,9 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('regA', val)}
           clk={this.state.clk}
           reset={this.state.reset}
-          load={false} // @todo control from program
+          load={this.state.controlWord.ai}
           in={this.state.bus}
-          oe={false} // Output enable @todo control from program
+          oe={this.state.controlWord.ao}
           bus={(val) => this.setBus(val)}
         />
         <Register
@@ -97,15 +98,15 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('regB', val)}
           clk={this.state.clk}
           reset={this.state.reset}
-          load={false} // @todo control from program
+          load={this.state.controlWord.bi}
           in={this.state.bus}
-          oe={false} // Output enable @todo control from program
+          oe={false}
           bus={(val) => this.setBus(val)}
         />
         <Alu
           regA={this.state.regA}
           regB={this.state.regB}
-          eo={false} // Output enable @todo control from program
+          eo={this.state.controlWord.eo}
           bus={(val) => this.setBus(val)}
         />
         <Register
@@ -113,10 +114,10 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('regOut', val)}
           clk={this.state.clk}
           reset={this.state.reset}
-          load={false} // @todo control from program
+          load={this.state.controlWord.oi}
           in={this.state.bus}
-          oe={false} // Output enable @todo control from program
-          bus={() => {}} // Does not output to the bus, so ignore it.
+          oe={false}
+          bus={() => {}}
         />
 
       </div>
@@ -125,7 +126,7 @@ class Cpu extends React.Component {
 
   setBus(value) {
     this.setState({ bus: value });
-    console.log(`bus: ${value}`);
+    console.log(`setBus: ${value}`);
   }
 
   updateState(key, state) {

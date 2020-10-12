@@ -35,17 +35,14 @@ class Ram extends React.Component {
    */
   componentDidUpdate(prevProps) {
     // always @(addr)
-    if (this.props.readAddress !== prevProps.readAddress) {
-      console.log(`readAddress: ${this.props.readAddress}`);
-      console.log(`ramValue: ${this.memory[this.props.readAddress]}`);
-      this.setState({ value: this.memory[this.props.readAddress] });
-    }
-
-    // always @(posedge clk)
-    if (this.props.clk !== prevProps.clk && this.props.clk === true) {
+    if (this.props.ro !== prevProps.ro) {
       // RAM out.
       if (this.props.ro) {
-        this.props.bus(this.state.value);
+        const value = this.memory[this.props.readAddress];
+        console.log(`readAddress: ${this.props.readAddress}`);
+        console.log(`ramValue: ${value}`);
+        this.setState({ value });
+        this.props.bus(value);
       }
     }
   }

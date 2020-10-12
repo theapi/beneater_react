@@ -27,6 +27,14 @@ class Clock extends React.Component {
     this.props.update(clk);
   }
 
+  componentDidUpdate(prevProps) {
+    // always @(halt)
+    if (this.props.halt) {
+      // Stop the clock
+      this.componentWillUnmount();
+    }
+  }
+
   render() {
     return (
       <div>
