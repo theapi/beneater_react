@@ -39,7 +39,7 @@ class MicroCodeCounter extends React.Component {
 
   render() {
     return (
-      <div className="module microcode">
+      <div id="microcode" className="module">
         <span className="name">Micro code counter: </span>
         <span className="value">{this.state.value}</span>
       </div>

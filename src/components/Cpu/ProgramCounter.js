@@ -54,7 +54,7 @@ class ProgramCounter extends React.Component {
       className = 'busOut';
     }
     return (
-      <div className={`module pc ${className}`}>
+      <div id="pc" className={`module ${className}`}>
         <span className="name">ProgramCounter: </span>
         <span className="value">{this.state.value}</span>
       </div>

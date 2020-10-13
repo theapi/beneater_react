@@ -37,7 +37,7 @@ class Clock extends React.Component {
 
   render() {
     return (
-      <div className="module clock">
+      <div id="clock" className="module">
         <span className="name">Clock: </span>
         <span className="value">{this.state.clk ? 'HIGH' : 'LOW'}</span>
       </div>

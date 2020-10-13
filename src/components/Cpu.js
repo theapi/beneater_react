@@ -1,14 +1,14 @@
 import React from 'react';
 
-import Clock from './Clock';
+import Clock from './Cpu/Clock';
 import Led from './Led';
-import Bus from './Bus';
-import ProgramCounter from './ProgramCounter';
-import MicroCodeCounter from './MicroCodeCounter';
-import Ram from './Ram';
-import Register from './Register'
-import Alu from './Alu'
-import Controller from './Controller';
+import Bus from './Cpu/Bus';
+import ProgramCounter from './Cpu/ProgramCounter';
+import MicroCodeCounter from './Cpu/MicroCodeCounter';
+import Ram from './Cpu/Ram';
+import Register from './Cpu/Register'
+import Alu from './Cpu/Alu'
+import Controller from './Cpu/Controller';
 
 import '../css/cpu.css';
 
@@ -30,14 +30,14 @@ class Cpu extends React.Component {
 
   render() {
     return (
-      <div className="Cpu">
-        <Led clk={this.state.clk}/>
+      <div id="cpu">
+        <Led clk={this.state.clk} />
         <Clock
           halt={this.state.controlWord.hlt}
           update={(val) => this.updateState('clk', val)}
         />
 
-        <Bus bus={this.state.bus}/>
+        <Bus  bus={this.state.bus} />
 
         <ProgramCounter
           clk={this.state.clk}

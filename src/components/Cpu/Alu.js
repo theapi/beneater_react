@@ -34,7 +34,7 @@ class Alu extends React.Component {
       className = 'busOut';
     }
     return (
-      <div className={`module alu ${className}`}>
+      <div id="alu" className={`module ${className}`}>
         <span className="name">Sum: </span>
         <span className="value">{this.state.value}</span>
       </div>

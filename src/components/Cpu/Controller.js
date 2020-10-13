@@ -63,7 +63,7 @@ class Controller extends React.Component {
 
   render() {
     return (
-      <div className="module controller">
+      <div id="controller" className="module">
         <span className="name">Control word: </span>
         <span className="value">
           {this.state.value.toString(16).toUpperCase()}
