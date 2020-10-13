@@ -70,7 +70,7 @@ class Cpu extends React.Component {
           load={this.state.controlWord.ii}
           in={this.state.bus}
           oe={this.state.controlWord.io}
-          bus={(val) => this.setBus(val >> 4)}
+          bus={(val) => this.setBus(val & 0xF)} // Only lower 4 bits to the bus
         />
         <MicroCodeCounter
           clk={this.state.clk}
@@ -110,7 +110,7 @@ class Cpu extends React.Component {
           bus={(val) => this.setBus(val)}
         />
         <Register
-          name="Output Register"
+          name="Output"
           update={(val) => this.updateState('regOut', val)}
           clk={this.state.clk}
           reset={this.state.reset}

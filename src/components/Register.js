@@ -50,7 +50,8 @@ class Register extends React.Component {
     }
     return (
       <div>
-        <h2 className={className}>{this.props.name}: {this.state.value}</h2>
+        <h2 className={className}>{this.props.name}
+        : {this.state.value} (0x{this.state.value.toString(16).toUpperCase()})</h2>
       </div>
     );
   }
