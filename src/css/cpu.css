@@ -1,0 +1,12 @@
+
+.module {
+  padding: 2px;
+}
+
+.module .value {
+  font-weight: bold;
+}
+
+.module .name {
+  font-style: italic;
+}
