@@ -5,8 +5,14 @@
 
 .module .value {
   font-weight: bold;
+  position: relative;
+  top: -18px;
+  left: 255px;
+  margin-bottom: -18px;
 }
 
 .module .name {
-  font-style: italic;
+  width: 250px;
+  text-align: right;
+  font-family: 'Courier New', Courier, monospace;
 }

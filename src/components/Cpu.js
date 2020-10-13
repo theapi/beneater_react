@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Clock from './Cpu/Clock';
-import Led from './Led';
 import Bus from './Cpu/Bus';
 import ProgramCounter from './Cpu/ProgramCounter';
 import MicroCodeCounter from './Cpu/MicroCodeCounter';
@@ -31,7 +30,6 @@ class Cpu extends React.Component {
   render() {
     return (
       <div id="cpu">
-        <Led clk={this.state.clk} />
         <Clock
           halt={this.state.controlWord.hlt}
           update={(val) => this.updateState('clk', val)}

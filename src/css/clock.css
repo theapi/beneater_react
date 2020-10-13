@@ -1,0 +1,15 @@
+
+#clock .led {
+  position: relative;
+  top: -18px;
+  left: 255px;
+  margin-bottom: -18px;
+}
+
+#clock .led.on {
+  background-color: crimson;
+}
+
+#clock .led.off {
+  background-color: rgb(68, 6, 19);
+}

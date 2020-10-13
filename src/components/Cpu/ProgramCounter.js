@@ -55,8 +55,8 @@ class ProgramCounter extends React.Component {
     }
     return (
       <div id="pc" className={`module ${className}`}>
-        <span className="name">ProgramCounter: </span>
-        <span className="value">{this.state.value}</span>
+        <div className="name">ProgramCounter: </div>
+        <div className="value">{this.state.value}</div>
       </div>
     );
   }

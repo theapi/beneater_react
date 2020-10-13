@@ -35,8 +35,8 @@ class Alu extends React.Component {
     }
     return (
       <div id="alu" className={`module ${className}`}>
-        <span className="name">Sum: </span>
-        <span className="value">{this.state.value}</span>
+        <div className="name">Sum: </div>
+        <div className="value">{this.state.value}</div>
       </div>
     );
   }

@@ -48,10 +48,10 @@ class Register extends React.Component {
     }
     return (
       <div className={`module reg ${className}`}>
-        <span className="name">{this.props.name}: </span>
-        <span className="value">
+        <div className="name">{this.props.name}: </div>
+        <div className="value">
           0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
-        </span>
+        </div>
       </div>
     );
   }

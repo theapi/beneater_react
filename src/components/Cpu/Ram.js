@@ -52,10 +52,10 @@ class Ram extends React.Component {
     }
     return (
       <div id="ram" className={`module ${className}`}>
-        <span className="name">RAM: </span>
-        <span className="value">
+        <div className="name">RAM: </div>
+        <div className="value">
           0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
-        </span>
+        </div>
       </div>
     );
   }

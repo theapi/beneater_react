@@ -1,5 +1,8 @@
 import React from 'react';
 
+import Led from '../Led';
+import '../../css/clock.css';
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -38,8 +41,10 @@ class Clock extends React.Component {
   render() {
     return (
       <div id="clock" className="module">
-        <span className="name">Clock: </span>
-        <span className="value">{this.state.clk ? 'HIGH' : 'LOW'}</span>
+        <div className="name">Clock: </div>
+        <Led
+          clk={this.state.clk}
+        />
       </div>
     );
   }
