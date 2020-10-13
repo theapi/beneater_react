@@ -25,9 +25,7 @@ class ProgramCounter extends React.Component {
     // always @(oe)
     if (this.props.co !== prevProps.co) {
       // Output enable
-      // console.log(`pc co: ${this.props.co}`);
       if (this.props.co) {
-        console.log(`pc bus: ${this.state.value}`);
         this.props.bus(this.state.value);
       }
     }
@@ -41,7 +39,6 @@ class ProgramCounter extends React.Component {
         if (value > 15) {
           value = 0;
         }
-        console.log(`pc set: ${value}`);
         this.setState({ value });
       } else if (this.props.load) {
         // Load from the input.
@@ -57,8 +54,9 @@ class ProgramCounter extends React.Component {
       className = 'busOut';
     }
     return (
-      <div>
-        <h2 className={className}>ProgramCounter: {this.state.value}</h2>
+      <div className={`module pc ${className}`}>
+        <span className="name">ProgramCounter: </span>
+        <span className="value">{this.state.value}</span>
       </div>
     );
   }

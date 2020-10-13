@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './css/bus.css';
 import Cpu from './components/Cpu';
 import * as serviceWorker from './serviceWorker';
 

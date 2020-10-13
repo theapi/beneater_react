@@ -10,6 +10,8 @@ import Register from './Register'
 import Alu from './Alu'
 import Controller from './Controller';
 
+import '../css/cpu.css';
+
 class Cpu extends React.Component {
   constructor(props) {
     super(props);
@@ -29,11 +31,12 @@ class Cpu extends React.Component {
   render() {
     return (
       <div className="Cpu">
+        <Led clk={this.state.clk}/>
         <Clock
           halt={this.state.controlWord.hlt}
           update={(val) => this.updateState('clk', val)}
         />
-        <Led clk={this.state.clk}/>
+
         <Bus bus={this.state.bus}/>
 
         <ProgramCounter
@@ -44,6 +47,11 @@ class Cpu extends React.Component {
           in={this.state.bus}
           co={this.state.controlWord.co}
           bus={(val) => this.setBus(val)}
+        />
+        <MicroCodeCounter
+          clk={this.state.clk}
+          reset={this.state.reset}
+          update={(val) => this.updateState('uCount', val)}
         />
 
         <Register
@@ -62,6 +70,7 @@ class Cpu extends React.Component {
           ro={this.state.controlWord.ro} // Output enable
           bus={(val) => this.setBus(val)}
         />
+
         <Register
           name="Instruction Register"
           update={(val) => this.updateState('regInstruction', val)}
@@ -71,11 +80,6 @@ class Cpu extends React.Component {
           in={this.state.bus}
           oe={this.state.controlWord.io}
           bus={(val) => this.setBus(val & 0xF)} // Only lower 4 bits to the bus
-        />
-        <MicroCodeCounter
-          clk={this.state.clk}
-          reset={this.state.reset}
-          update={(val) => this.updateState('uCount', val)}
         />
         <Controller
           counter={this.state.uCount}
@@ -109,6 +113,7 @@ class Cpu extends React.Component {
           eo={this.state.controlWord.eo}
           bus={(val) => this.setBus(val)}
         />
+
         <Register
           name="Output"
           update={(val) => this.updateState('regOut', val)}
@@ -126,7 +131,6 @@ class Cpu extends React.Component {
 
   setBus(value) {
     this.setState({ bus: value });
-    console.log(`setBus: ${value}`);
   }
 
   updateState(key, state) {

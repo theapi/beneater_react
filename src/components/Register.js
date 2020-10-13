@@ -27,14 +27,12 @@ class Register extends React.Component {
       // Output enable
       if (this.props.oe) {
         this.props.bus(this.state.value);
-        console.log(`reg to bus: ${this.props.name}: ${this.state.value}`);
       }
     }
 
     // always @(posedge clk)
     if (this.props.clk !== prevProps.clk && this.props.clk === true) {
       if (this.props.load) {
-        console.log(`reg loading: ${this.props.name}: ${this.props.in}`);
         // Load from the bus.
         this.setState({ value: this.props.in });
         // Set the external state for the ALU
@@ -49,9 +47,11 @@ class Register extends React.Component {
       className = 'busOut';
     }
     return (
-      <div>
-        <h2 className={className}>{this.props.name}
-        : {this.state.value} (0x{this.state.value.toString(16).toUpperCase()})</h2>
+      <div className={`module reg ${className}`}>
+        <span className="name">{this.props.name}: </span>
+        <span className="value">
+          0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
+        </span>
       </div>
     );
   }

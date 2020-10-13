@@ -34,8 +34,9 @@ class Alu extends React.Component {
       className = 'busOut';
     }
     return (
-      <div>
-        <h2 className={className}>Sum: {this.state.value}</h2>
+      <div className={`module alu ${className}`}>
+        <span className="name">Sum: </span>
+        <span className="value">{this.state.value}</span>
       </div>
     );
   }

@@ -39,8 +39,6 @@ class Ram extends React.Component {
       // RAM out.
       if (this.props.ro) {
         const value = this.memory[this.props.readAddress];
-        console.log(`readAddress: ${this.props.readAddress}`);
-        console.log(`ramValue: ${value}`);
         this.setState({ value });
         this.props.bus(value);
       }
@@ -53,9 +51,11 @@ class Ram extends React.Component {
       className = 'busOut';
     }
     return (
-      <div>
-        <h2 className={className}>Ram value at {this.props.readAddress} is
-        : {this.state.value.toString(16).toUpperCase()}</h2>
+      <div className={`module ram ${className}`}>
+        <span className="name">RAM: </span>
+        <span className="value">
+          0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
+        </span>
       </div>
     );
   }

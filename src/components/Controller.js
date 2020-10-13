@@ -56,15 +56,18 @@ class Controller extends React.Component {
 
       // Set the decoded control word for the rest of the cpu.
       this.props.update(this.decode(this.memory[readAddress]));
+      // Console log for the history of the instructions.
       console.log(this.decode(this.memory[readAddress]));
     }
   }
 
   render() {
     return (
-      <div>
-        <h2>Control word
-        : {this.state.value.toString(16).toUpperCase()}</h2>
+      <div className="module controller">
+        <span className="name">Control word: </span>
+        <span className="value">
+          {this.state.value.toString(16).toUpperCase()}
+        </span>
       </div>
     );
   }
