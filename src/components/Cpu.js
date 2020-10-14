@@ -35,7 +35,7 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('clk', val)}
         />
 
-        <Bus  bus={this.state.bus} />
+        <Bus bus={this.state.bus} />
 
         <ProgramCounter
           clk={this.state.clk}
