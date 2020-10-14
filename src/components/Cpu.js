@@ -30,6 +30,7 @@ class Cpu extends React.Component {
   render() {
     return (
       <div id="cpu">
+
         <Clock
           halt={this.state.controlWord.hlt}
           update={(val) => this.updateState('clk', val)}
