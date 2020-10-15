@@ -39,9 +39,7 @@ const Clock = () => {
 
       <div id="clock" className="module">
         <div className="name">Clock: </div>
-        <Led
-          clk={clk}
-        />
+        <Led on={clk} />
       </div>
     </div>
   );

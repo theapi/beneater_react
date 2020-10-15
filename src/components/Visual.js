@@ -1,19 +1,23 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+
+import Led from './Led';
+
+import { selectClock } from '../features/clock/clockSlice';
 
 import '../css/visual.css';
 
-class Visual extends React.Component {
+const Visual = () => {
+  const clk = useSelector(selectClock);
+  return (
+    <div id="visual">
 
-  render() {
-    return (
-      <div id="visual">
+      <h6>A visual representation of what's happening inside the cpu goes here</h6>
 
-        <h6>A visual representation of what's happening inside the cpu gotes here</h6>
+      <Led on={clk}  />
 
-      </div>
-    );
-  }
-
+    </div>
+  );
 }
 
 export default Visual;
