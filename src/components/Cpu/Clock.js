@@ -6,7 +6,7 @@ import { tick, selectClock } from '../../features/clock/clockSlice';
 
 import '../../css/clock.css';
 
-const Clock = () => {
+const Clock = ({halt}) => {
   const [isActive, setIsActive] = useState(false);
   const dispatch = useDispatch();
   const clk = useSelector(selectClock);
@@ -17,6 +17,10 @@ const Clock = () => {
 
   useEffect(() => {
     let interval = null;
+    if (halt) {
+      isActive = false;
+    }
+
     if (isActive) {
       interval = setInterval(() => {
         dispatch(tick(!clk));
@@ -25,7 +29,7 @@ const Clock = () => {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [isActive, clk, dispatch]);
+  }, [isActive, clk, halt, dispatch]);
 
   return (
     <div>

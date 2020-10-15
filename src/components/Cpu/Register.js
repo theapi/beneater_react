@@ -1,57 +1,56 @@
-import React from 'react';
 
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectRegister,
+  reset as regReset,
+  load as regLoad
+} from '../../features/register/registerSlice';
+import { selectClock } from '../../features/clock/clockSlice';
+import { selectBus, setBus, } from '../../features/bus/busSlice';
+
+const Register = ({reset, id, name, oe, load}) => {
+  const dispatch = useDispatch();       // @todo pass in out as a function to props
+  const clk = useSelector(selectClock); // @todo pass clk in as a prop
+  const bus = useSelector(selectBus);   // @todo pass bus in as a prop
+
+  // Have to get all the register values
+  const values = useSelector(selectRegister);
+  const value = values[id] ? values[id] : 0;
+
+  useEffect(() => {
+    if (reset === true) {
+      dispatch(regReset());
     }
+  }, [reset, dispatch]);
+
+  useEffect(() => {
+    if (oe) {
+      // @todo the cpu should do the setBus dispatch,
+      // this should be props.out(value) when CPU has bus dispatcher
+      dispatch(setBus(value));
+    }
+  }, [oe, value, dispatch]);
+
+  useEffect(() => {
+    if (load && clk) {
+      // Load from the bus on the posedge of the clock.
+      dispatch(regLoad({key: id, value: bus}));
+    }
+  }, [load, name, clk, bus, dispatch]);
+
+  let className = 'busDisconnected';
+  if (oe) {
+    className = 'busOut';
   }
-
-  componentDidUpdate(prevProps) {
-    // always @(posedge reset)
-    if (this.props.reset === true) {
-      if (this.props.reset !== prevProps.reset) {
-        this.setState({ value: 0 });
-      }
-
-      // Ignore the clock while held in reset.
-      return;
-    }
-
-    // always @(oe)
-    if (this.props.oe !== prevProps.oe) {
-      // Output enable
-      if (this.props.oe) {
-        this.props.bus(this.state.value);
-      }
-    }
-
-    // always @(posedge clk)
-    if (this.props.clk !== prevProps.clk && this.props.clk === true) {
-      if (this.props.load) {
-        // Load from the bus.
-        this.setState({ value: this.props.in });
-        // Set the external state for the ALU
-        this.props.update(this.props.in);
-      }
-    }
-  }
-
-  render() {
-    let className = 'busDisconnected';
-    if (this.props.oe) {
-      className = 'busOut';
-    }
-    return (
-      <div className={`module reg ${className}`}>
-        <div className="name">{this.props.name}: </div>
-        <div className="value">
-          0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
-        </div>
+  return (
+    <div className={`module reg ${className}`}>
+      <div className="name">{name}: </div>
+      <div className="value">
+        0x{value.toString(16).toUpperCase()} ({value})
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Register;

@@ -5,7 +5,6 @@ import Bus from './Cpu/Bus';
 import ProgramCounter from './Cpu/ProgramCounter';
 import MicroCodeCounter from './Cpu/MicroCodeCounter';
 import Ram from './Cpu/Ram';
-import RegisterA from './Cpu/RegisterA'
 import Register from './Cpu/Register'
 import Alu from './Cpu/Alu'
 import Controller from './Cpu/Controller';
@@ -34,10 +33,9 @@ class Cpu extends React.Component {
 
         <Clock
           halt={this.state.controlWord.hlt}
-          update={(val) => this.updateState('clk', val)}
         />
 
-        <Bus bus={this.state.bus} />
+        <Bus />
 
         <ProgramCounter
           clk={this.state.clk}
@@ -56,13 +54,12 @@ class Cpu extends React.Component {
 
         <Register
           name="Memory Address Register"
-          update={(val) => this.updateState('regMar', val)}
+          id="regMar"
           clk={this.state.clk}
           reset={this.state.reset}
           load={this.state.controlWord.mi}
           in={this.state.bus}
           oe={false} // No output enable for the MAR.
-          bus={() => {}} // MAR does not output to the bus, so ignore it.
         />
         <Ram
           clk={this.state.clk}
@@ -73,13 +70,13 @@ class Cpu extends React.Component {
 
         <Register
           name="Instruction Register"
-          update={(val) => this.updateState('regInstruction', val)}
+          id="regInstruction"
           clk={this.state.clk}
           reset={this.state.reset}
           load={this.state.controlWord.ii}
           in={this.state.bus}
           oe={this.state.controlWord.io}
-          bus={(val) => this.setBus(val & 0xF)} // Only lower 4 bits to the bus
+          out={(val) => this.setBus(val & 0xF)} // Only lower 4 bits to the bus
         />
         <Controller
           counter={this.state.uCount}
@@ -87,30 +84,24 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('controlWord', val)}
         />
 
-        <RegisterA
-          //load={this.state.controlWord.ai}
-          load={1}
-          oe={this.state.controlWord.ao}
-        />
         <Register
           name="A Register"
-          update={(val) => this.updateState('regA', val)}
+          id="regA"
           clk={this.state.clk}
           reset={this.state.reset}
-          load={this.state.controlWord.ai}
+          load={1} // {this.state.controlWord.ai}
           in={this.state.bus}
           oe={this.state.controlWord.ao}
-          bus={(val) => this.setBus(val)}
+          out={(val) => this.setBus(val)}
         />
         <Register
           name="B Register"
-          update={(val) => this.updateState('regB', val)}
+          id="regB"
           clk={this.state.clk}
           reset={this.state.reset}
           load={this.state.controlWord.bi}
           in={this.state.bus}
           oe={false}
-          bus={(val) => this.setBus(val)}
         />
         <Alu
           regA={this.state.regA}
@@ -121,13 +112,12 @@ class Cpu extends React.Component {
 
         <Register
           name="Output"
-          update={(val) => this.updateState('regOut', val)}
+          id="regOut"
           clk={this.state.clk}
           reset={this.state.reset}
           load={this.state.controlWord.oi}
           in={this.state.bus}
           oe={false}
-          bus={() => {}}
         />
 
       </div>
