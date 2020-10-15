@@ -3,6 +3,9 @@ import React from 'react';
 import Led from '../Led';
 import '../../css/clock.css';
 
+import { connect } from 'react-redux';
+import { tick } from '../../features/clock/clockSlice';
+
 class Clock extends React.Component {
   constructor(props) {
     super(props);
@@ -25,8 +28,8 @@ class Clock extends React.Component {
   tick() {
     const clk = !this.state.clk;
     this.setState({ clk });
-
-    // Output the clock to the rest of the system.
+    this.props.tick(clk);
+    // // Output the clock to the rest of the system.
     this.props.update(clk);
   }
 
@@ -43,11 +46,18 @@ class Clock extends React.Component {
       <div id="clock" className="module">
         <div className="name">Clock: </div>
         <Led
-          clk={this.state.clk}
+          clk={this.state.value}
         />
       </div>
     );
   }
 }
+// WOW! to messy with classes.
+const mapDispatchToProps = (dispatch) => {
+  return {
+      tick: () => dispatch(tick())
+  }
+};
+export default connect(null, mapDispatchToProps)(Clock);
 
-export default Clock;
+// export default Clock;
