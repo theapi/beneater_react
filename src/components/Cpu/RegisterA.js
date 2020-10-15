@@ -15,20 +15,20 @@ const RegisterA = (props) => {
     if (props.reset === true) {
       dispatch(reset());
     }
-  }, [props.reset]);
+  }, [props.reset, dispatch]);
 
   useEffect(() => {
     if (props.oe) {
       dispatch(setBus(value));
     }
-  }, [props.oe]);
+  }, [props.oe, value, dispatch]);
 
   useEffect(() => {
     if (props.load && clk) {
       // Load from the bus on the posedge of the clock.
-      dispatch(load(bus));
+      dispatch(load({key: 'foo', value: bus}));
     }
-  }, [props.load, clk]);
+  }, [props.load, clk, bus, dispatch]);
 
   let className = 'busDisconnected';
   if (props.oe) {

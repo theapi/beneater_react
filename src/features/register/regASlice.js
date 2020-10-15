@@ -10,7 +10,8 @@ export const regASlice = createSlice({
       state.value = 0;
     },
     load: (state, action) => {
-      state.value = action.payload;
+      console.log(action);
+      state.value = action.payload.value;
     },
   },
 });
