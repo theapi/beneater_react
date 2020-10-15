@@ -5,6 +5,7 @@ import Bus from './Cpu/Bus';
 import ProgramCounter from './Cpu/ProgramCounter';
 import MicroCodeCounter from './Cpu/MicroCodeCounter';
 import Ram from './Cpu/Ram';
+import RegisterA from './Cpu/RegisterA'
 import Register from './Cpu/Register'
 import Alu from './Cpu/Alu'
 import Controller from './Cpu/Controller';
@@ -86,6 +87,11 @@ class Cpu extends React.Component {
           update={(val) => this.updateState('controlWord', val)}
         />
 
+        <RegisterA
+          //load={this.state.controlWord.ai}
+          load={1}
+          oe={this.state.controlWord.ao}
+        />
         <Register
           name="A Register"
           update={(val) => this.updateState('regA', val)}

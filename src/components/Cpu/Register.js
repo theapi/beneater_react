@@ -8,9 +8,6 @@ class Register extends React.Component {
     }
   }
 
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
   componentDidUpdate(prevProps) {
     // always @(posedge reset)
     if (this.props.reset === true) {
