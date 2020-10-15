@@ -6,13 +6,9 @@ export const clockSlice = createSlice({
     value: false,
   },
   reducers: {
-    tick: state => {
-      state.value = !state.value;
+    tick: (state, action) => {
+      state.value = action.payload;
     },
-    // tick: (state, action) => {
-    //   console.log(action.payload);
-    //   state.value = action.payload;
-    // },
   },
 });
 

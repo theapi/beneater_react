@@ -1,63 +1,50 @@
-import React from 'react';
 
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Led from '../Led';
+import { tick, selectClock } from '../../features/clock/clockSlice';
+
 import '../../css/clock.css';
 
-import { connect } from 'react-redux';
-import { tick } from '../../features/clock/clockSlice';
+const Clock = () => {
+  const [isActive, setIsActive] = useState(false);
+  const dispatch = useDispatch();
+  const clk = useSelector(selectClock);
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clk: false,
+  function toggle() {
+    setIsActive(!isActive);
+  }
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        dispatch(tick(!clk));
+      }, 1000);
+    } else if (!isActive) {
+      clearInterval(interval);
     }
-  }
+    return () => clearInterval(interval);
+  }, [isActive, clk, dispatch]);
 
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
+  return (
+    <div>
+      <div>
+        <button
+        className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
+        onClick={toggle}>
+          {isActive ? 'Pause' : 'Start'}
+        </button>
+      </div>
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
-
-  tick() {
-    const clk = !this.state.clk;
-    this.setState({ clk });
-    this.props.tick(clk);
-    // // Output the clock to the rest of the system.
-    this.props.update(clk);
-  }
-
-  componentDidUpdate(prevProps) {
-    // always @(halt)
-    if (this.props.halt) {
-      // Stop the clock
-      this.componentWillUnmount();
-    }
-  }
-
-  render() {
-    return (
       <div id="clock" className="module">
         <div className="name">Clock: </div>
         <Led
-          clk={this.state.value}
+          clk={clk}
         />
       </div>
-    );
-  }
-}
-// WOW! to messy with classes.
-const mapDispatchToProps = (dispatch) => {
-  return {
-      tick: () => dispatch(tick())
-  }
+    </div>
+  );
 };
-export default connect(null, mapDispatchToProps)(Clock);
 
-// export default Clock;
+export default Clock;
