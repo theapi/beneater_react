@@ -37,7 +37,7 @@ const Register = ({reset, id, name, oe, load}) => {
       // Load from the bus on the posedge of the clock.
       dispatch(regLoad({key: id, value: bus}));
     }
-  }, [load, name, clk, bus, dispatch]);
+  }, [load, id, clk, bus, dispatch]);
 
   let className = 'busDisconnected';
   if (oe) {
