@@ -17,11 +17,7 @@ const Clock = ({halt}) => {
 
   useEffect(() => {
     let interval = null;
-    if (halt) {
-      isActive = false;
-    }
-
-    if (isActive) {
+    if (isActive && !halt) {
       interval = setInterval(() => {
         dispatch(tick(!clk));
       }, 1000);
