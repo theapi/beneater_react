@@ -1,5 +1,5 @@
 import React from 'react';
-import { rom } from './isa_rom';
+import { rom } from '../../features/controller/isa_rom';
 
 class Controller extends React.Component {
   constructor(props) {
@@ -16,10 +16,6 @@ class Controller extends React.Component {
     return (value >> bit) & 0x01;
   }
 
-  /**
-   * Extract the rom value to a json object of the control word.
-   * @param {integer} value
-   */
   decode(value) {
     return {
       hlt: this.bitRead(value,15), // Halt
@@ -41,9 +37,6 @@ class Controller extends React.Component {
     };
   }
 
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
   componentDidUpdate(prevProps) {
     // always @(counter)
     if (this.props.counter !== prevProps.counter) {
