@@ -1,50 +1,35 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  reset as countReset,
+  increment,
+  selectUCount
+} from '../../features/controller/ucounterSlice';
 
-class MicroCodeCounter extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: -1,
+const MicroCodeCounter = ({ reset, clk }) => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectUCount);
+
+  // Reset
+  useEffect(() => {
+    if (reset === true) {
+      dispatch(countReset());
     }
-  }
+  }, [reset, dispatch]);
 
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
-  componentDidUpdate(prevProps) {
-    // always @(posedge reset)
-    if (this.props.reset === true) {
-      if (this.props.reset !== prevProps.reset) {
-        this.setState({ value: 0 });
-      }
-
-      // Ignore the clock while held in reset.
-      return;
+  // Clock tick
+  useEffect(() => {
+    if (clk) {
+      dispatch(increment());
     }
+  }, [clk, dispatch]);
 
-    // always @(posedge clk)
-    if (this.props.clk !== prevProps.clk && this.props.clk === true) {
-      let value = this.state.value;
-      // Increment, but only up to 4.
-      if (value < 4) {
-        value++;
-      } else {
-        value = 0;
-      }
-
-      this.setState({ value });
-      this.props.update(value);
-    }
-  }
-
-  render() {
-    return (
-      <div id="microcode" className="module">
-        <div className="name">Micro code counter: </div>
-        <div className="value">{this.state.value}</div>
-      </div>
-    );
-  }
-}
+  return (
+    <div id="microcode" className="module">
+      <div className="name">Micro code counter: </div>
+      <div className="value">{value}</div>
+    </div>
+  );
+};
 
 export default MicroCodeCounter;

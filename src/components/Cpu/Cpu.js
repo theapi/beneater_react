@@ -1,16 +1,56 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
-import Clock from './Cpu/Clock';
-import Bus from './Cpu/Bus';
-import ProgramCounter from './Cpu/ProgramCounter';
-import MicroCodeCounter from './Cpu/MicroCodeCounter';
-import Ram from './Cpu/Ram';
-import Register from './Cpu/Register'
-import Alu from './Cpu/Alu'
-import Controller from './Cpu/Controller';
+import Clock from './Clock';
+import MicroCodeCounter from './MicroCodeCounter';
+import Bus from './Bus';
+import ProgramCounter from './ProgramCounter';
+// import Ram from './Ram';
+// import Register from './Register'
+// import Alu from './Alu'
+// import Controller from './Controller';
 
-import '../css/cpu.css';
+import { selectReset } from '../../features/cpu/cpuSlice';
+import { selectClock } from '../../features/clock/clockSlice';
+import {
+  selectBus,
+  setBus,
+} from '../../features/bus/busSlice';
 
+import '../../css/cpu.css';
+
+const Cpu = () => {
+  const dispatch = useDispatch();
+
+  const reset = useSelector(selectReset);;
+  const clk = useSelector(selectClock);
+  const bus = useSelector(selectBus);
+
+  return (
+    <div id="cpu">
+
+      <Clock halt={false} />
+      <MicroCodeCounter
+        clk={clk}
+        reset={reset}
+      />
+      <Bus />
+
+      <ProgramCounter
+        clk={clk}
+        reset={reset}
+        inc={true}
+        load={false}
+        input={bus}
+        co={true}
+        out={(val) => dispatch(setBus(val))}
+      />
+
+    </div>
+  );
+};
+
+/*
 class Cpu extends React.Component {
   constructor(props) {
     super(props);
@@ -49,7 +89,6 @@ class Cpu extends React.Component {
         <MicroCodeCounter
           clk={this.state.clk}
           reset={this.state.reset}
-          update={(val) => this.updateState('uCount', val)}
         />
 
         <Register
@@ -133,5 +172,6 @@ class Cpu extends React.Component {
   }
 
 }
+*/
 
 export default Cpu;

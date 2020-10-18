@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Cpu from './Cpu';
+import Cpu from './Cpu/Cpu';
 import Visual from './Visual';
 
 class App extends React.Component {

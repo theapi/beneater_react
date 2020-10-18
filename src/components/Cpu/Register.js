@@ -10,7 +10,7 @@ import { selectClock } from '../../features/clock/clockSlice';
 import { selectBus, setBus, } from '../../features/bus/busSlice';
 
 const Register = ({reset, id, name, oe, load}) => {
-  const dispatch = useDispatch();       // @todo pass in out as a function to props
+  const dispatch = useDispatch();
   const clk = useSelector(selectClock); // @todo pass clk in as a prop
   const bus = useSelector(selectBus);   // @todo pass bus in as a prop
 
