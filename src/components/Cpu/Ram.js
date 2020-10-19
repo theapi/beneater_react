@@ -40,7 +40,7 @@ class Ram extends React.Component {
       if (this.props.ro) {
         const value = this.memory[this.props.readAddress];
         this.setState({ value });
-        this.props.bus(value);
+        this.props.out(value);
       }
     }
   }

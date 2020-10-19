@@ -5,13 +5,14 @@ import Clock from './Clock';
 import MicroCodeCounter from './MicroCodeCounter';
 import Bus from './Bus';
 import ProgramCounter from './ProgramCounter';
-// import Ram from './Ram';
+import Ram from './Ram';
 // import Register from './Register'
 // import Alu from './Alu'
-// import Controller from './Controller';
+import Controller from './Controller';
 
 import { selectReset } from '../../features/cpu/cpuSlice';
 import { selectClock } from '../../features/clock/clockSlice';
+import { selectUCount } from '../../features/controller/ucounterSlice';
 import {
   selectBus,
   setBus,
@@ -24,6 +25,7 @@ const Cpu = () => {
 
   const reset = useSelector(selectReset);;
   const clk = useSelector(selectClock);
+  const ucount = useSelector(selectUCount);
   const bus = useSelector(selectBus);
 
   return (
@@ -39,11 +41,23 @@ const Cpu = () => {
       <ProgramCounter
         clk={clk}
         reset={reset}
-        inc={true}
-        load={false}
+        inc={true} // {this.state.controlWord.ce}
+        load={false} // {this.state.controlWord.j}
         input={bus}
-        co={true}
+        co={true} // {this.state.controlWord.co}
         out={(val) => dispatch(setBus(val))}
+      />
+
+      <Ram
+        clk={clk}
+        readAddress={0} // {this.state.regMar}
+        ro={false} // {this.state.controlWord.ro} // Output enable
+        out={(val) => dispatch(setBus(val))}
+      />
+
+      <Controller
+        counter={ucount}
+        intruction={0x1E} //{this.state.regInstruction}
       />
 
     </div>

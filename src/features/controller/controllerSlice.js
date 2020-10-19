@@ -34,7 +34,7 @@ export const controllerSlice = createSlice({
   name: 'controller',
   initialState: {
     romValue: false,
-    cw: {},
+    cw: decode(0),
   },
 
   reducers: {
@@ -50,6 +50,7 @@ export const controllerSlice = createSlice({
       const readAddress = instruction | ucount;
       state.romValue = memory[readAddress];
       state.cw = decode(state.romValue);
+      //console.log(state.cw);
     },
   },
 });

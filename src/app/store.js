@@ -6,6 +6,7 @@ import busReducer from '../features/bus/busSlice';
 import registerReducer from '../features/register/registerSlice';
 import ucounterReducer from '../features/controller/ucounterSlice'
 import programCounterReducer from '../features/controller/programCounterSlice'
+import controllerReducer from '../features/controller/controllerSlice';
 
 export default configureStore({
   reducer: {
@@ -15,5 +16,6 @@ export default configureStore({
     register: registerReducer,
     ucounter: ucounterReducer,
     programCounter: programCounterReducer,
+    controller: controllerReducer,
   },
 });
