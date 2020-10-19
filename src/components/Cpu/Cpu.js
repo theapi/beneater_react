@@ -35,7 +35,7 @@ const Cpu = () => {
   return (
     <div id="cpu">
 
-      <Clock halt={false} />
+      <Clock halt={controlWord.hlt} />
       <MicroCodeCounter
         clk={clk}
         reset={reset}
