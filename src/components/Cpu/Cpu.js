@@ -6,13 +6,15 @@ import MicroCodeCounter from './MicroCodeCounter';
 import Bus from './Bus';
 import ProgramCounter from './ProgramCounter';
 import Ram from './Ram';
-// import Register from './Register'
+import Register from './Register'
 // import Alu from './Alu'
 import Controller from './Controller';
 
 import { selectReset } from '../../features/cpu/cpuSlice';
 import { selectClock } from '../../features/clock/clockSlice';
 import { selectUCount } from '../../features/controller/ucounterSlice';
+import { selectRegisters } from '../../features/register/registerSlice';
+import { selectControlWord } from '../../features//controller/controllerSlice';
 import {
   selectBus,
   setBus,
@@ -23,10 +25,12 @@ import '../../css/cpu.css';
 const Cpu = () => {
   const dispatch = useDispatch();
 
-  const reset = useSelector(selectReset);;
+  const reset = useSelector(selectReset);
   const clk = useSelector(selectClock);
   const ucount = useSelector(selectUCount);
   const bus = useSelector(selectBus);
+  const registers = useSelector(selectRegisters);
+  const controlWord = useSelector(selectControlWord);
 
   return (
     <div id="cpu">
@@ -41,23 +45,74 @@ const Cpu = () => {
       <ProgramCounter
         clk={clk}
         reset={reset}
-        inc={true} // {this.state.controlWord.ce}
-        load={false} // {this.state.controlWord.j}
+        inc={controlWord.ce}
+        load={controlWord.j}
         input={bus}
-        co={true} // {this.state.controlWord.co}
+        co={controlWord.co}
         out={(val) => dispatch(setBus(val))}
       />
 
+      <Register
+        name="Memory Address Register"
+        id="regMar"
+        clk={clk}
+        reset={reset}
+        load={controlWord.mi}
+        input={bus}
+        oe={false} // No output enable for the MAR.
+      />
       <Ram
         clk={clk}
-        readAddress={0} // {this.state.regMar}
-        ro={false} // {this.state.controlWord.ro} // Output enable
+        readAddress={registers['regMar']}
+        ro={controlWord.ro}
         out={(val) => dispatch(setBus(val))}
       />
-
+      <Register
+        name="Instruction Register"
+        id="regInstruction"
+        clk={clk}
+        reset={reset}
+        load={controlWord.ii}
+        input={bus}
+        oe={controlWord.io}
+        out={(val) => dispatch(setBus(val & 0xF))} // Only lower 4 bits to the bus
+      />
       <Controller
         counter={ucount}
-        intruction={0x1E} //{this.state.regInstruction}
+        intruction={registers['regInstruction']}
+      />
+
+      <Register
+        name="A Register"
+        id="regA"
+        clk={clk}
+        reset={reset}
+        load={controlWord.ai}
+        input={bus}
+        oe={controlWord.ao}
+        out={(val) => dispatch(setBus(val))}
+      />
+      <Register
+        name="B Register"
+        id="regB"
+        clk={clk}
+        reset={reset}
+        load={controlWord.bi}
+        input={bus}
+        oe={false}
+      />
+
+      {/* alu
+      here */}
+
+      <Register
+        name="Output"
+        id="regOut"
+        clk={clk}
+        reset={reset}
+        load={controlWord.oi}
+        input={bus}
+        oe={false}
       />
 
     </div>

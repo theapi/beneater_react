@@ -18,6 +18,6 @@ export const registerSlice = createSlice({
 
 export const { reset, load } = registerSlice.actions;
 
-export const selectRegister = state => state.register.values;
+export const selectRegisters = state => state.register.values;
 
 export default registerSlice.reducer;

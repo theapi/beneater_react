@@ -2,20 +2,16 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  selectRegister,
+  selectRegisters,
   reset as regReset,
   load as regLoad
 } from '../../features/register/registerSlice';
-import { selectClock } from '../../features/clock/clockSlice';
-import { selectBus, setBus, } from '../../features/bus/busSlice';
 
-const Register = ({reset, id, name, oe, load}) => {
+const Register = ({reset, clk, input, id, name, oe, load, out}) => {
   const dispatch = useDispatch();
-  const clk = useSelector(selectClock); // @todo pass clk in as a prop
-  const bus = useSelector(selectBus);   // @todo pass bus in as a prop
 
   // Have to get all the register values
-  const values = useSelector(selectRegister);
+  const values = useSelector(selectRegisters);
   const value = values[id] ? values[id] : 0;
 
   useEffect(() => {
@@ -26,18 +22,16 @@ const Register = ({reset, id, name, oe, load}) => {
 
   useEffect(() => {
     if (oe) {
-      // @todo the cpu should do the setBus dispatch,
-      // this should be props.out(value) when CPU has bus dispatcher
-      dispatch(setBus(value));
+      out(value);
     }
-  }, [oe, value, dispatch]);
+  }, [oe, value, out]);
 
   useEffect(() => {
     if (load && clk) {
       // Load from the bus on the posedge of the clock.
-      dispatch(regLoad({key: id, value: bus}));
+      dispatch(regLoad({key: id, value: input}));
     }
-  }, [load, id, clk, bus, dispatch]);
+  }, [load, id, clk, input, dispatch]);
 
   let className = 'busDisconnected';
   if (oe) {

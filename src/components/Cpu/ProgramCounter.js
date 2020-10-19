@@ -21,7 +21,7 @@ const ProgramCounter = ({ reset, clk, inc, load, input, co, out }) => {
     if (co) {
       out(value);
     }
-  }, [co, out, value, dispatch]);
+  }, [co, out, value]);
 
   // Increment
   useEffect(() => {
