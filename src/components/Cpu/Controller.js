@@ -7,17 +7,18 @@ import {
   selectControlAddr,
 } from '../../features/controller/controllerSlice';
 
-const Controller = ({ counter, instruction}) => {
+const Controller = ({ counter, ram}) => {
   const dispatch = useDispatch();
   const romValue = useSelector(selectRomValue);
   const addr = useSelector(selectControlAddr);
 
   useEffect(() => {
+    console.log(ram);
     dispatch(buildControlWord({
       ucount: counter,
-      regInstruction: instruction,
+      regInstruction: ram,
     }));
-  }, [counter, instruction, dispatch]);
+  }, [counter, ram, dispatch]);
 
   return (
     <div id="controller" className="module">

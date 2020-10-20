@@ -32,6 +32,8 @@ const Cpu = () => {
   const registers = useSelector(selectRegisters);
   const controlWord = useSelector(selectControlWord);
 
+  console.log(registers);
+
   return (
     <div id="cpu">
 
@@ -79,7 +81,7 @@ const Cpu = () => {
       />
       <Controller
         counter={ucount}
-        intruction={registers['regInstruction']}
+        ram={registers['regInstruction']}
       />
 
       <Register

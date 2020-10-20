@@ -37,7 +37,7 @@ const Clock = ({halt}) => {
         </button>
 
         <button onClick={() => dispatch(tick(!clk))}>
-          Tick
+        {clk ? 'Tick' : 'Tock'}
         </button>
       </div>
 
