@@ -26,7 +26,7 @@ const ProgramCounter = ({ reset, clk, inc, load, input, co, out }) => {
   // Increment
   useEffect(() => {
     // @posedge
-    if (inc && clk) {
+    if (inc && clk) { console.log(inc, clk);
       dispatch(increment());
     }
   }, [inc, clk, dispatch]);

@@ -33,24 +33,29 @@ const decode = value => {
 export const controllerSlice = createSlice({
   name: 'controller',
   initialState: {
-    romValue: false,
+    romValue: 0,
     cw: decode(0),
+    address: 0,
   },
 
   reducers: {
     buildControlWord: (state, action) => {
       const memory = rom();
-      const { regInstruction, ucount } = action.payload;
+      let { regInstruction, ucount } = action.payload;
+      if (!Number.isInteger(regInstruction)) {
+        regInstruction = 0;
+      }
 
       // The instruction is the higher nibble of what comes from the Ram.
       // The lower nibble byte of Ram is the operand.
       // So mask off the lower nibble.
       const instruction = regInstruction & 0xF0;
       // The lower nibble is the micro code counter value.
-      const readAddress = instruction | ucount;
-      state.romValue = memory[readAddress];
+      console.log(regInstruction, instruction, ucount, instruction | ucount);
+      state.readAddress = instruction | ucount;
+      state.romValue = memory[state.readAddress];
       state.cw = decode(state.romValue);
-      //console.log(state.cw);
+      console.log(state.cw)
     },
   },
 });
@@ -59,5 +64,6 @@ export const { buildControlWord } = controllerSlice.actions;
 
 export const selectRomValue = state => state.controller.romValue;
 export const selectControlWord = state => state.controller.cw;
+export const selectControlAddr = state => state.controller.readAddress;
 
 export default controllerSlice.reducer;

@@ -37,7 +37,7 @@ class Ram extends React.Component {
     // always @(addr)
     if (this.props.ro !== prevProps.ro) {
       // RAM out.
-      if (this.props.ro) {
+      if (this.props.ro && Number.isInteger(this.props.readAddress)) {
         const value = this.memory[this.props.readAddress];
         this.setState({ value });
         this.props.out(value);

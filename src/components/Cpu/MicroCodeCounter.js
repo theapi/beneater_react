@@ -19,7 +19,8 @@ const MicroCodeCounter = ({ reset, clk }) => {
 
   // Clock tick
   useEffect(() => {
-    if (clk) {
+    // @negedge
+    if (!clk) {
       dispatch(increment());
     }
   }, [clk, dispatch]);

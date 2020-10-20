@@ -124,6 +124,7 @@ const Cpu = () => {
   );
 };
 
+
 /*
 class Cpu extends React.Component {
   constructor(props) {

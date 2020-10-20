@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   selectRomValue,
-  buildControlWord
+  buildControlWord,
+  selectControlAddr,
 } from '../../features/controller/controllerSlice';
 
 const Controller = ({ counter, instruction}) => {
   const dispatch = useDispatch();
   const romValue = useSelector(selectRomValue);
+  const addr = useSelector(selectControlAddr);
 
   useEffect(() => {
     dispatch(buildControlWord({
@@ -21,7 +23,7 @@ const Controller = ({ counter, instruction}) => {
     <div id="controller" className="module">
       <div className="name">Control word: </div>
       <div className="value">
-        {romValue.toString(16).toUpperCase()}
+        {romValue.toString(16).toUpperCase()} (addr: {addr})
       </div>
     </div>
   );

@@ -35,6 +35,10 @@ const Clock = ({halt}) => {
         onClick={toggle}>
           {isActive ? 'Pause' : 'Start'}
         </button>
+
+        <button onClick={() => dispatch(tick(!clk))}>
+          Tick
+        </button>
       </div>
 
       <div id="clock" className="module">
