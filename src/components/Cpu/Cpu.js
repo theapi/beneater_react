@@ -32,8 +32,6 @@ const Cpu = () => {
   const registers = useSelector(selectRegisters);
   const controlWord = useSelector(selectControlWord);
 
-  console.log(registers);
-
   return (
     <div id="cpu">
 

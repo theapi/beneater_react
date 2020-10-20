@@ -3,11 +3,17 @@ import { createSlice } from '@reduxjs/toolkit';
 export const registerSlice = createSlice({
   name: 'register',
   initialState: {
-    values: {},
+    values: {
+      regInstruction: 0,
+      regMar: 0,
+      regA: 0,
+      regB: 0,
+      regOut: 0,
+    },
   },
   reducers: {
     reset: state => {
-      state.values = {};
+      state.values = {}; // NO! must be same as initial state
     },
     load: (state, action) => {
       state.values[action.payload.key] = action.payload.value;

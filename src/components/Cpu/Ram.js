@@ -1,5 +1,46 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
+import {
+  selectRamValue,
+  selectRamAddress,
+  load as ramLoad,
+} from '../../features/ram/ramSlice';
+
+const Ram = ({ readAddress, ro, out }) => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectRamValue);
+  const addr = useSelector(selectRamAddress);
+
+  // Output enable
+  useEffect(() => {
+    if (ro) {
+      out(value);
+    }
+  }, [ro, out, value]);
+
+  // Load
+  useEffect(() => {
+    // always @readAddress
+    dispatch(ramLoad(readAddress));
+  }, [readAddress, dispatch]);
+
+  let className = 'busDisconnected';
+  if (ro) {
+    className = 'busOut';
+  }
+  return (
+    <div id="ram" className={`module ${className}`}>
+      <div className="name">RAM: </div>
+      <div className="value">
+        0x{value.toString(16).toUpperCase()}
+        ({value}) [ addr: {addr} ]
+      </div>
+    </div>
+  );
+};
+
+/*
 class Ram extends React.Component {
   constructor(props) {
     super(props);
@@ -30,9 +71,6 @@ class Ram extends React.Component {
     }
   }
 
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
   componentDidUpdate(prevProps) {
     // always @(addr)
     if (this.props.ro !== prevProps.ro) {
@@ -54,11 +92,13 @@ class Ram extends React.Component {
       <div id="ram" className={`module ${className}`}>
         <div className="name">RAM: </div>
         <div className="value">
-          0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
+          0x{this.state.value.toString(16).toUpperCase()}
+          ({this.state.value})
         </div>
       </div>
     );
   }
 }
+*/
 
 export default Ram;

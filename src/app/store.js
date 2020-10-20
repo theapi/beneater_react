@@ -8,6 +8,7 @@ import ucounterReducer from '../features/controller/ucounterSlice'
 import programCounterReducer from '../features/controller/programCounterSlice'
 import controllerReducer from '../features/controller/controllerSlice';
 import aluReducer from '../features/alu/aluSlice';
+import ramReducer from '../features/ram/ramSlice';
 
 export default configureStore({
   reducer: {
@@ -19,5 +20,6 @@ export default configureStore({
     programCounter: programCounterReducer,
     controller: controllerReducer,
     alu: aluReducer,
+    ram: ramReducer,
   },
 });

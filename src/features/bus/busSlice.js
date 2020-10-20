@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const busSlice = createSlice({
   name: 'bus',
   initialState: {
-    value: 42,
+    value: 0,
   },
   reducers: {
     setBus: (state, action) => {

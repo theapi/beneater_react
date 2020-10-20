@@ -33,7 +33,7 @@ export const programCounterSlice = createSlice({
         // Do nothing while in reset.
         return;
       }
-      state.value = action.payload.value;
+      state.value = action.payload;
     },
   },
 });

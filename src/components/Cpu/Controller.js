@@ -13,7 +13,6 @@ const Controller = ({ counter, ram}) => {
   const addr = useSelector(selectControlAddr);
 
   useEffect(() => {
-    console.log(ram);
     dispatch(buildControlWord({
       ucount: counter,
       regInstruction: ram,

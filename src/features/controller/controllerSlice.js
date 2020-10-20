@@ -51,11 +51,11 @@ export const controllerSlice = createSlice({
       // So mask off the lower nibble.
       const instruction = regInstruction & 0xF0;
       // The lower nibble is the micro code counter value.
-      console.log(regInstruction, instruction, ucount, instruction | ucount);
+      // console.log(regInstruction, instruction, ucount, instruction | ucount);
       state.readAddress = instruction | ucount;
       state.romValue = memory[state.readAddress];
       state.cw = decode(state.romValue);
-      console.log(state.cw)
+      // console.log(state.cw)
     },
   },
 });

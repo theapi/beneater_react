@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 export const clockSlice = createSlice({
   name: 'clock',
   initialState: {
-    value: 0, // intentionally not false so the microcounter does tick at the start
+    value: 1, // intentionally not true so the microcounter does tick at the start
   },
   reducers: {
     tick: (state, action) => {

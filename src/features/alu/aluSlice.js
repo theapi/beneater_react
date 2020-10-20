@@ -8,14 +8,20 @@ export const aluSlice = createSlice({
 
   reducers: {
     calculate: (state, action) => {
-      const { regA, regB, sub } = action.payload;
-      if (Number.isInteger(regA) && Number.isInteger(regB)) {
-        if (sub) {
-          state.value = regA - regB;
-        } else {
-          state.value = regA + regB;
-        }
+      let { regA, regB, sub } = action.payload;
+      if (!Number.isInteger(regA)) {
+        regA = 0;
       }
+      if (!Number.isInteger(regB)) {
+        regB = 0;
+      }
+
+      if (sub) {
+        state.value = regA - regB;
+      } else {
+        state.value = regA + regB;
+      }
+
     },
   },
 });

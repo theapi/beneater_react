@@ -10,7 +10,8 @@ const Bus = () => {
     <div id="bus" className="module">
       <div className="name">Bus: </div>
       <div className="value">
-        0x{bus.toString(16).toUpperCase()} ({bus})
+        {/* 0x{bus.toString(16).toUpperCase()} */}
+         ({bus})
       </div>
     </div>
   );
