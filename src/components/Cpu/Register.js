@@ -1,60 +1,62 @@
-import React from 'react';
 
-class Register extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
+import React, { useEffect, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectRegisters,
+  reset as regReset,
+  load as regLoad
+} from '../../features/register/registerSlice';
+
+const Register = ({reset, clk, input, id, name, oe, load, out}) => {
+  const dispatch = useDispatch();
+
+  // Have to get all the register values
+  const values = useSelector(selectRegisters);
+  const value = values[id] ? values[id] : 0;
+
+  const inputRef = useRef(input);
+
+  useEffect(() => {
+    if (reset === true) {
+      dispatch(regReset());
     }
+  }, [reset, dispatch]);
+
+  useEffect(() => {
+    if (oe) {
+      out(value);
+    }
+  }, [oe, value, out]);
+
+  // always @input
+  // change the current input value whenever it changes.
+  useEffect(() => {
+    if (input) {
+      inputRef.current = input;
+    }
+  }, [input]);
+
+  useEffect(() => {
+    if (load && clk) {
+      // console.log(`REG LOAD: ${inputRef.current}`);
+      dispatch(regLoad({key: id, value: inputRef.current}));
+    }
+  // If the input is a dependency the load
+  // is always happening when input changes rather than just once.
+  }, [load, clk, id, dispatch]);
+
+  let className = 'busDisconnected';
+  if (oe) {
+    className = 'busOut';
   }
-
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
-  componentDidUpdate(prevProps) {
-    // always @(posedge reset)
-    if (this.props.reset === true) {
-      if (this.props.reset !== prevProps.reset) {
-        this.setState({ value: 0 });
-      }
-
-      // Ignore the clock while held in reset.
-      return;
-    }
-
-    // always @(oe)
-    if (this.props.oe !== prevProps.oe) {
-      // Output enable
-      if (this.props.oe) {
-        this.props.bus(this.state.value);
-      }
-    }
-
-    // always @(posedge clk)
-    if (this.props.clk !== prevProps.clk && this.props.clk === true) {
-      if (this.props.load) {
-        // Load from the bus.
-        this.setState({ value: this.props.in });
-        // Set the external state for the ALU
-        this.props.update(this.props.in);
-      }
-    }
-  }
-
-  render() {
-    let className = 'busDisconnected';
-    if (this.props.oe) {
-      className = 'busOut';
-    }
-    return (
-      <div className={`module reg ${className}`}>
-        <div className="name">{this.props.name}: </div>
-        <div className="value">
-          0x{this.state.value.toString(16).toUpperCase()} ({this.state.value})
-        </div>
+  return (
+    <div className={`module reg ${className}`}>
+      <div className="name">{name}: </div>
+      <div className="value">
+        0x{value.toString(16).toUpperCase()} ({value})
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Register;

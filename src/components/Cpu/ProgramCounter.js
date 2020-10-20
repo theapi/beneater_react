@@ -1,5 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  selectPC,
+  reset as pcReset,
+  load as pcLoad,
+  increment,
+} from '../../features/controller/programCounterSlice';
 
+const ProgramCounter = ({ reset, clk, inc, load, input, co, out }) => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectPC);
+
+  // Reset
+  useEffect(() => {
+    dispatch(pcReset(reset));
+  }, [reset, dispatch]);
+
+  // Output enable
+  useEffect(() => {
+    if (co) {
+      out(value);
+    }
+  }, [co, out, value]);
+
+  // Increment
+  useEffect(() => {
+    // @posedge
+    if (inc && clk) {
+      dispatch(increment());
+    }
+  }, [inc, clk, dispatch]);
+
+  // Load
+  useEffect(() => {
+    if (load && clk) {
+      // @posedge Load from the bus on the posedge of the clock.
+      dispatch(pcLoad(input));
+    }
+  }, [load, clk, input, dispatch]);
+
+  let className = 'busDisconnected';
+  if (co) {
+    className = 'busOut';
+  }
+  return (
+    <div id="pc" className={`module ${className}`}>
+      <div className="name">ProgramCounter: </div>
+      <div className="value">{value}</div>
+    </div>
+  );
+};
+
+/*
 class ProgramCounter extends React.Component {
   constructor(props) {
     super(props);
@@ -8,9 +60,6 @@ class ProgramCounter extends React.Component {
     }
   }
 
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
   componentDidUpdate(prevProps) {
     // always @(posedge reset)
     if (this.props.reset === true) {
@@ -61,5 +110,6 @@ class ProgramCounter extends React.Component {
     );
   }
 }
+*/
 
 export default ProgramCounter;

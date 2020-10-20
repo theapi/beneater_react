@@ -1,53 +1,52 @@
-import React from 'react';
 
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Led from '../Led';
+import { tick, selectClock } from '../../features/clock/clockSlice';
+
 import '../../css/clock.css';
 
-class Clock extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clk: false,
+const Clock = ({halt}) => {
+  const [isActive, setIsActive] = useState(false);
+  const dispatch = useDispatch();
+  const clk = useSelector(selectClock);
+
+  function toggle() {
+    setIsActive(!isActive);
+  }
+
+  useEffect(() => {
+    let interval = null;
+    if (isActive && !halt) {
+      interval = setInterval(() => {
+        dispatch(tick(!clk));
+      }, 1000);
+    } else if (!isActive) {
+      clearInterval(interval);
     }
-  }
+    return () => clearInterval(interval);
+  }, [isActive, clk, halt, dispatch]);
 
-  componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
-  }
+  return (
+    <div>
+      <div>
+        <button
+        className={`button button-primary button-primary-${isActive ? 'active' : 'inactive'}`}
+        onClick={toggle}>
+          {isActive ? 'Pause' : 'Start'}
+        </button>
 
-  componentWillUnmount() {
-    clearInterval(this.timerID);
-  }
+        <button onClick={() => dispatch(tick(!clk))}>
+        {clk ? 'Go to negedge' : 'Go to posedge'}
+        </button>
+      </div>
 
-  tick() {
-    const clk = !this.state.clk;
-    this.setState({ clk });
-
-    // Output the clock to the rest of the system.
-    this.props.update(clk);
-  }
-
-  componentDidUpdate(prevProps) {
-    // always @(halt)
-    if (this.props.halt) {
-      // Stop the clock
-      this.componentWillUnmount();
-    }
-  }
-
-  render() {
-    return (
       <div id="clock" className="module">
         <div className="name">Clock: </div>
-        <Led
-          clk={this.state.clk}
-        />
+        <Led on={clk} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Clock;
