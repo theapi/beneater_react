@@ -7,7 +7,7 @@ import Bus from './Bus';
 import ProgramCounter from './ProgramCounter';
 import Ram from './Ram';
 import Register from './Register'
-// import Alu from './Alu'
+import Alu from './Alu'
 import Controller from './Controller';
 
 import { selectReset } from '../../features/cpu/cpuSlice';
@@ -102,8 +102,13 @@ const Cpu = () => {
         oe={false}
       />
 
-      {/* alu
-      here */}
+      <Alu
+        regA={registers['regA']}
+        regB={registers['regB']}
+        sub={false}
+        eo={controlWord.eo}
+        out={(val) => dispatch(setBus(val))}
+      />
 
       <Register
         name="Output"

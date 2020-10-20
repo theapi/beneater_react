@@ -7,6 +7,7 @@ import registerReducer from '../features/register/registerSlice';
 import ucounterReducer from '../features/controller/ucounterSlice'
 import programCounterReducer from '../features/controller/programCounterSlice'
 import controllerReducer from '../features/controller/controllerSlice';
+import aluReducer from '../features/alu/aluSlice';
 
 export default configureStore({
   reducer: {
@@ -17,5 +18,6 @@ export default configureStore({
     ucounter: ucounterReducer,
     programCounter: programCounterReducer,
     controller: controllerReducer,
+    alu: aluReducer,
   },
 });

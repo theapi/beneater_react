@@ -1,5 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
+import {
+  selectAlu,
+  calculate
+} from '../../features/alu/aluSlice';
+
+
+const Alu = ({ regA, regB, sub, eo, out}) => {
+  const dispatch = useDispatch();
+  const value = useSelector(selectAlu);
+
+  useEffect(() => {
+    dispatch(calculate({
+      regA,
+      regB,
+      sub,
+    }));
+  }, [regA, regB, sub, dispatch]);
+
+  useEffect(() => {
+    if (eo) {
+      out(value);
+    }
+  }, [eo, value, out]);
+
+  let className = 'busDisconnected';
+  if (eo) {
+    className = 'busOut';
+  }
+  return (
+    <div id="alu" className={`module ${className}`}>
+      <div className="name">Sum: </div>
+      <div className="value">{value}</div>
+    </div>
+  );
+};
+
+/*
 class Alu extends React.Component {
   constructor(props) {
     super(props);
@@ -8,9 +46,6 @@ class Alu extends React.Component {
     }
   }
 
-  /**
-   * Do the work here as render shouldn't effect state.
-   */
   componentDidUpdate(prevProps) {
     // always @(regA or regB)
     if (this.props.regA !== prevProps.regA || this.props.regB !== prevProps.regB) {
@@ -41,5 +76,6 @@ class Alu extends React.Component {
     );
   }
 }
+*/
 
 export default Alu;

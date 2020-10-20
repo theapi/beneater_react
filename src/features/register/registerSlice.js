@@ -10,7 +10,6 @@ export const registerSlice = createSlice({
       state.values = {};
     },
     load: (state, action) => {
-      console.log(action);
       state.values[action.payload.key] = action.payload.value;
     },
   },
