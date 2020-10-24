@@ -3,22 +3,25 @@ import { useSelector } from 'react-redux';
 import { selectClock } from '../../features/clock/clockSlice';
 // import useCanvas from './CanvasHook';
 
-import { waveform } from './lib/Draw';
+//import Waveform from './lib/Waveform';
 
 const Canvas = props => {
+  const { waveforms, ...rest} = props;
   const clk = useSelector(selectClock);
   const canvasRef = useRef(null);
 
+  const { clkWave } = waveforms;
+
   useEffect(() => {
     const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d');
 
-    waveform(context, {clk});
-  }, [clk]);
+    clkWave.update(ctx, clk);
+  }, [clk, clkWave]);
 
   return (
     <div>
-      <span>CANVAS:</span> <canvas ref={canvasRef} {...props}/>
+      <span>CANVAS:</span> <canvas ref={canvasRef} {...rest}/>
     </div>
   );
 };

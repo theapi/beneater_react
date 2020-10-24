@@ -9,16 +9,16 @@ import { selectClock } from '../features/clock/clockSlice';
 
 import '../css/visual.css';
 
+import Waveform from './LogicAnalyser/lib/Waveform';
+
+const clkWave = new Waveform(0, 0, '#0000FF');
+const waveforms = {
+  clkWave,
+};
+
 const Visual = () => {
   const clk = useSelector(selectClock);
 
-  // const draw = (ctx, frameCount) => {
-  //   ctx.beginPath();
-  //   ctx.moveTo(20, 20);
-  //   ctx.lineTo(20, 100);
-  //   ctx.lineTo(70, 100);
-  //   ctx.stroke();
-  // };
 
   return (
     <div id="visual">
@@ -27,7 +27,7 @@ const Visual = () => {
 
       <Led on={clk}  />
       <Controller />
-      <Canvas width="600" height="200" class="canvas" />
+      <Canvas width="600" height="200" className="canvas" waveforms={waveforms} />
 
     </div>
   );
