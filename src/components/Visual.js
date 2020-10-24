@@ -12,15 +12,13 @@ import '../css/visual.css';
 const Visual = () => {
   const clk = useSelector(selectClock);
 
-  const draw = (ctx, frameCount) => {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-    ctx.fillStyle = '#0000FF';
-
-    ctx.beginPath();
-    // ctx.arc(50, 100, 20, 0, 2*Math.PI);
-    ctx.arc(50, 100, 20*Math.sin(frameCount*0.05)**2, 0, 2*Math.PI);
-    ctx.fill();
-  };
+  // const draw = (ctx, frameCount) => {
+  //   ctx.beginPath();
+  //   ctx.moveTo(20, 20);
+  //   ctx.lineTo(20, 100);
+  //   ctx.lineTo(70, 100);
+  //   ctx.stroke();
+  // };
 
   return (
     <div id="visual">
@@ -29,7 +27,7 @@ const Visual = () => {
 
       <Led on={clk}  />
       <Controller />
-      <Canvas draw={draw} width="600" height="200"/>
+      <Canvas width="600" height="200" class="canvas" />
 
     </div>
   );

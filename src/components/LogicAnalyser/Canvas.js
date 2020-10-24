@@ -1,39 +1,26 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectClock } from '../../features/clock/clockSlice';
+// import useCanvas from './CanvasHook';
 
-import useCanvas from './CanvasHook';
+import { waveform } from './lib/Draw';
 
-// https://medium.com/@pdx.lucasm/canvas-with-react-js-32e133c05258
 const Canvas = props => {
-  const { draw, ...rest } = props
+  const clk = useSelector(selectClock);
+  const canvasRef = useRef(null);
 
-  const canvasRef = useCanvas(draw);
-  return <canvas ref={canvasRef} {...rest}/>;
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext('2d');
 
-  // const canvasRef = useRef(null);
+    waveform(context, {clk});
+  }, [clk]);
 
-  // useEffect(() => {
-  //   const canvas = canvasRef.current;
-  //   const ctx = canvas.getContext('2d');
-  //   let frameCount = 0;
-  //   let frameId;
-
-  //   const render = () => {
-  //     frameCount++;
-  //     draw(ctx, frameCount);
-  //     frameId = window.requestAnimationFrame(render);
-  //   };
-  //   render();
-
-  //   return () => {
-  //     window.cancelAnimationFrame(frameId);
-  //   };
-
-  //   // ctx.fillStyle = '#0000FF';
-  //   // ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-  // }, [draw]);
-
-  // return <canvas ref={canvasRef} {...props} />
+  return (
+    <div>
+      <span>CANVAS:</span> <canvas ref={canvasRef} {...props}/>
+    </div>
+  );
 };
 
 export default Canvas;

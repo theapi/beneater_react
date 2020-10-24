@@ -17,3 +17,7 @@
 #visual .led.off {
   background-color: rgb(68, 6, 19);
 }
+
+#visual .canvas {
+  vertical-align: text-top;
+}
