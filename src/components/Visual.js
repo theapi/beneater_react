@@ -12,13 +12,9 @@ import '../css/visual.css';
 import Waveform from './LogicAnalyser/lib/Waveform';
 
 const clkWave = new Waveform(0, 0, '#0000FF');
-const waveforms = {
-  clkWave,
-};
 
 const Visual = () => {
   const clk = useSelector(selectClock);
-
 
   return (
     <div id="visual">
@@ -27,7 +23,7 @@ const Visual = () => {
 
       <Led on={clk}  />
       <Controller />
-      <Canvas width="600" height="200" className="canvas" waveforms={waveforms} />
+      <Canvas width="600" height="20" className="canvas" name="Clock" waveform={clkWave} signal={clk} />
 
     </div>
   );
