@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 
 const Canvas = props => {
-  const { name, waveform, signal, ...rest} = props;
+  const { name, clk, waveform, signal, ...rest} = props;
 
   const canvasRef = useRef(null);
 
@@ -10,7 +10,7 @@ const Canvas = props => {
     const ctx = canvas.getContext('2d');
 
     waveform.update(ctx, signal);
-  }, [signal, waveform]);
+  }, [clk, waveform]); // signal intentionally not in the list as update should only happen on clk changes
 
   return (
     <div>
