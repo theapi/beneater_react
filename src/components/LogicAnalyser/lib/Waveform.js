@@ -7,7 +7,7 @@ class Waveform {
     this.currentY = y;
     this.size = 15;
     this.strokeStyle = strokeStyle;
-    this.currentSignal = null;
+    this.currentSignal = 0;
   }
 
   update(ctx, signal) {
