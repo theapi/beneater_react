@@ -27,10 +27,12 @@ const Visual = () => {
 
       <Led on={clk}  />
       <Controller />
-      <Canvas width="600" height="20" className="canvas"
-        name="Clock" clk={clk} waveform={clkWave} signal={clk} />
-      <Canvas width="600" height="20" className="canvas"
-        name="Clock" clk={clk} waveform={ceWave} signal={ce} />
+      <div className="logicAnalyser">
+        <Canvas width="600" height="20" className="canvas"
+          name="Clock" clk={clk} waveform={clkWave} signal={clk} />
+        <Canvas width="600" height="20" className="canvas"
+          name="Counter Enable" clk={clk} waveform={ceWave} signal={ce} />
+      </div>
     </div>
   );
 }

@@ -18,6 +18,29 @@
   background-color: rgb(68, 6, 19);
 }
 
-#visual .canvas {
-  vertical-align: text-top;
+#visual .module .value {
+  font-weight: normal;
+}
+
+#visual .logicAnalyser {
+  margin-top: 20px;
+}
+
+#visual .waveform {
+  margin: 0px;
+  border-color: red;
+}
+
+#visual .waveform .canvas {
+  position: relative;
+  top: -14px;
+  left: 255px;
+  margin-bottom: -15px;
+}
+
+#visual .waveform .name {
+  margin-bottom: -15px;
+  width: 250px;
+  text-align: right;
+  font-family: 'Courier New', Courier, monospace;
 }

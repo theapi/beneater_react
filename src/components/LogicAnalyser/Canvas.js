@@ -13,8 +13,9 @@ const Canvas = props => {
   }, [clk, waveform]); // signal intentionally not in the list as update should only happen on clk changes
 
   return (
-    <div>
-      <span>{name}:</span> <canvas ref={canvasRef} {...rest}/>
+    <div className="waveform">
+      <div className="name">{name}:</div>
+      <canvas className="canvas" ref={canvasRef} {...rest}/>
     </div>
   );
 };
