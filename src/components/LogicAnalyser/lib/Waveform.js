@@ -5,7 +5,8 @@ class Waveform {
     this.startY = 0;
     this.currentX = 0;
     this.currentY = 0;
-    this.size = 15;
+    this.width = 10;
+    this.height = 15;
     this.strokeStyle = strokeStyle;
     this.currentSignal = 0;
   }
@@ -13,13 +14,13 @@ class Waveform {
   update(ctx, signal) {
     const xStart = this.currentX;
     const yStart = this.currentY;
-    const xEnd = this.currentX + this.size;
+    const xEnd = this.currentX + this.width;
     this.currentX = xEnd;
     let yEnd;
     if (this.currentSignal !== signal) {
-      yEnd = this.currentSignal ? this.size : 0;
+      yEnd = this.currentSignal ? this.height : 0;
     } else {
-      yEnd = this.currentSignal ? 0 : this.size;
+      yEnd = this.currentSignal ? 0 : this.height;
     }
 
     this.currentY = yEnd;

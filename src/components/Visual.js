@@ -13,23 +13,23 @@ import '../css/visual.css';
 import Waveform from './LogicAnalyser/lib/Waveform';
 
 const waves = [];
-waves['clk'] = new Waveform();
-waves['jc'] = new Waveform();
-waves['j'] = new Waveform();
-waves['ce'] = new Waveform();
-waves['co'] = new Waveform();
+waves['clk'] = new Waveform('#dc143c');
+waves['jc'] = new Waveform('#00004f');
+waves['j'] = new Waveform('#00004f');
+waves['ce'] = new Waveform('#051700');
+waves['co'] = new Waveform('#051700');
 waves['oi'] = new Waveform();
 waves['bi'] = new Waveform();
 waves['su'] = new Waveform();
 waves['eo'] = new Waveform();
 waves['ao'] = new Waveform();
 waves['ai'] = new Waveform();
-waves['ii'] = new Waveform();
+waves['ii'] = new Waveform('#051700');
 waves['io'] = new Waveform();
-waves['ro'] = new Waveform();
+waves['ro'] = new Waveform('#051700');
 waves['ri'] = new Waveform();
-waves['mi'] = new Waveform();
-waves['hlt'] = new Waveform();
+waves['mi'] = new Waveform('#051700');
+waves['hlt'] = new Waveform('#000000');
 
 const Visual = () => {
   const clk = useSelector(selectClock);

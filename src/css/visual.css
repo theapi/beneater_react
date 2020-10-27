@@ -11,7 +11,7 @@
 }
 
 #visual .led.on {
-  background-color: crimson;
+  background-color: rgb(220, 20, 60);
 }
 
 #visual .led.off {
