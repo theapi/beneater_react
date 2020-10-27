@@ -10,7 +10,8 @@ const Canvas = props => {
     const ctx = canvas.getContext('2d');
 
     waveform.update(ctx, signal);
-  }, [clk, waveform]); // signal intentionally not in the list as update should only happen on clk changes
+    // signal intentionally not in the list as update should only happen on clk changes
+  }, [clk, waveform]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="waveform">

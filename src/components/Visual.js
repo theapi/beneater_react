@@ -12,14 +12,31 @@ import '../css/visual.css';
 
 import Waveform from './LogicAnalyser/lib/Waveform';
 
-const clkWave = new Waveform(0, 0, '#0000FF');
-const ceWave = new Waveform(0, 0, '#0000FF');
+const waves = [];
+waves['clk'] = new Waveform();
+waves['jc'] = new Waveform();
+waves['j'] = new Waveform();
+waves['ce'] = new Waveform();
+waves['co'] = new Waveform();
+waves['oi'] = new Waveform();
+waves['bi'] = new Waveform();
+waves['su'] = new Waveform();
+waves['eo'] = new Waveform();
+waves['ao'] = new Waveform();
+waves['ai'] = new Waveform();
+waves['ii'] = new Waveform();
+waves['io'] = new Waveform();
+waves['ro'] = new Waveform();
+waves['ri'] = new Waveform();
+waves['mi'] = new Waveform();
+waves['hlt'] = new Waveform();
 
 const Visual = () => {
   const clk = useSelector(selectClock);
   const controlWord = useSelector(selectControlWord);
-  const { ce } = controlWord;
 
+  const width = 600;
+  const height = 20;
   return (
     <div id="visual">
 
@@ -28,10 +45,42 @@ const Visual = () => {
       <Led on={clk}  />
       <Controller />
       <div className="logicAnalyser">
-        <Canvas width="600" height="20" className="canvas"
-          name="Clock" clk={clk} waveform={clkWave} signal={clk} />
-        <Canvas width="600" height="20" className="canvas"
-          name="Counter Enable" clk={clk} waveform={ceWave} signal={ce} />
+
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Clock" waveform={waves['clk']} signal={clk} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Counter Out" waveform={waves['co']} signal={controlWord.co} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Counter Enable" waveform={waves['ce']} signal={controlWord.ce} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Output register in" waveform={waves['oi']} signal={controlWord.oi} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="B register in" waveform={waves['bi']} signal={controlWord.bi} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Subtract" waveform={waves['su']} signal={controlWord.su} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="ALU out" waveform={waves['eo']} signal={controlWord.eo} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="A register out" waveform={waves['ao']} signal={controlWord.ao} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="A register in" waveform={waves['ai']} signal={controlWord.ai} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Instruction in" waveform={waves['ii']} signal={controlWord.ii} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Instruction out" waveform={waves['io']} signal={controlWord.io} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="RAM out" waveform={waves['ro']} signal={controlWord.ro} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="RAM in" waveform={waves['ri']} signal={controlWord.ri} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="MAR in" waveform={waves['mi']} signal={controlWord.mi} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Halt" waveform={waves['hlt']} signal={controlWord.hlt} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Jump" waveform={waves['j']} signal={controlWord.j} />
+        <Canvas width={width} height={height} className="canvas" clk={clk}
+          name="Jump conditional" waveform={waves['jc']} signal={controlWord.jc} />
+
       </div>
     </div>
   );

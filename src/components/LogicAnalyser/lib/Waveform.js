@@ -1,10 +1,10 @@
 
 class Waveform {
-  constructor(x, y, strokeStyle) {
-    this.startX = x;
-    this.startY = y;
-    this.currentX = x;
-    this.currentY = y;
+  constructor(strokeStyle = '#0000FF') {
+    this.startX = 0;
+    this.startY = 0;
+    this.currentX = 0;
+    this.currentY = 0;
     this.size = 15;
     this.strokeStyle = strokeStyle;
     this.currentSignal = 0;
@@ -16,7 +16,7 @@ class Waveform {
     const xEnd = this.currentX + this.size;
     this.currentX = xEnd;
     let yEnd;
-    if (this.currentSignal != signal) {
+    if (this.currentSignal !== signal) {
       yEnd = this.currentSignal ? this.size : 0;
     } else {
       yEnd = this.currentSignal ? 0 : this.size;
