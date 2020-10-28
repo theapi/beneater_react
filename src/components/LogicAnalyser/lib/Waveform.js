@@ -31,6 +31,8 @@ class Waveform {
     ctx.lineTo(xStart, yEnd);
     ctx.lineTo(xEnd, yEnd);
     ctx.stroke();
+    // Stroke again for a stronger line.
+    ctx.stroke();
     this.currentSignal = signal;
   };
 
