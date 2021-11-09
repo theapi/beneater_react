@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/beneater_react/precache-manifest.10414e61fbea1e808101042e5d335fd8.js"
+  "/beneater_react/precache-manifest.db8b1467f65a9c825c9ff408a07822de.js"
 );
 
 self.addEventListener('message', (event) => {

@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/beneater_react/static/css/main.9cb73f7d.chunk.css",
-    "main.js": "/beneater_react/static/js/main.11f2dfac.chunk.js",
-    "main.js.map": "/beneater_react/static/js/main.11f2dfac.chunk.js.map",
+    "main.css": "/beneater_react/static/css/main.de3b8370.chunk.css",
+    "main.js": "/beneater_react/static/js/main.3e1b14a7.chunk.js",
+    "main.js.map": "/beneater_react/static/js/main.3e1b14a7.chunk.js.map",
     "runtime-main.js": "/beneater_react/static/js/runtime-main.f7848a15.js",
     "runtime-main.js.map": "/beneater_react/static/js/runtime-main.f7848a15.js.map",
     "static/js/2.5c3426ba.chunk.js": "/beneater_react/static/js/2.5c3426ba.chunk.js",
     "static/js/2.5c3426ba.chunk.js.map": "/beneater_react/static/js/2.5c3426ba.chunk.js.map",
     "index.html": "/beneater_react/index.html",
-    "precache-manifest.10414e61fbea1e808101042e5d335fd8.js": "/beneater_react/precache-manifest.10414e61fbea1e808101042e5d335fd8.js",
+    "precache-manifest.db8b1467f65a9c825c9ff408a07822de.js": "/beneater_react/precache-manifest.db8b1467f65a9c825c9ff408a07822de.js",
     "service-worker.js": "/beneater_react/service-worker.js",
-    "static/css/main.9cb73f7d.chunk.css.map": "/beneater_react/static/css/main.9cb73f7d.chunk.css.map",
+    "static/css/main.de3b8370.chunk.css.map": "/beneater_react/static/css/main.de3b8370.chunk.css.map",
     "static/js/2.5c3426ba.chunk.js.LICENSE.txt": "/beneater_react/static/js/2.5c3426ba.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f7848a15.js",
     "static/js/2.5c3426ba.chunk.js",
-    "static/css/main.9cb73f7d.chunk.css",
-    "static/js/main.11f2dfac.chunk.js"
+    "static/css/main.de3b8370.chunk.css",
+    "static/js/main.3e1b14a7.chunk.js"
   ]
 }
