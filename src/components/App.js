@@ -3,6 +3,7 @@ import React from 'react';
 import ControlWord from './ControlWord';
 import Cpu from './Cpu/Cpu';
 import Visual from './Visual';
+import Program from './Program';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class App extends React.Component {
         <Cpu />
         <Visual />
         <ControlWord />
+        <Program />
 
       </div>
     );
